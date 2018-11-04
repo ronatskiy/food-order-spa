@@ -16,6 +16,7 @@
   "devDependencies": {
     "eslint-plugin-babel": "5.2.1",
     "eslint-plugin-prettier": "3.0.0",
+    "gh-pages": "^2.0.1",
     "node-sass": "4.9.4",
     "prop-types": "15.6.2"
   },
@@ -23,7 +24,8 @@
     "start": "yarn && react-scripts start",
     "build": "yarn && react-scripts build",
     "test": "yarn && react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": [
     ">0.2%",
