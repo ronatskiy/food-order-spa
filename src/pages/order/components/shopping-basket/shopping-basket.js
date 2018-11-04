@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button } from "reactstrap";
 
 import Dish from "../../../../entities/dish";
-import DishSelector from "../dish-view/dish-selector";
+import DishSelector from "../dish-selector/dish-selector";
 import ShoppingCart from "../../../../components/logos/shopping-cart";
 import "./shopping-basket.scss";
 

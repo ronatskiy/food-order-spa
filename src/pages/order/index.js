@@ -1,10 +1,10 @@
 import React from "react";
-import { Alert, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import { Alert, Col, Row, TabContent, TabPane } from "reactstrap";
 
 import RootContext from "../../store/root-context";
-import { transformDayName } from "./components/transform-day-name";
 import visibleOnlyForAuthenticatedUser from "../../hocs/visible-only-for-authenticated-user";
 import TodayOrder from "./components/today-order/today-order";
+import DaySwitcher from "./components/day-switcher";
 import "./index.scss";
 
 class Order extends React.Component {
@@ -31,42 +31,31 @@ class Order extends React.Component {
 		}
 	}
 
-	_switchDay(dayName) {
+	_switchDay = dayName => {
 		if (this.state.selectedDay !== dayName) {
 			this.setState({
 				selectedDay: dayName,
 			});
 		}
-	}
+	};
 
 	render() {
 		return this.state.weekMenu.length > 0 ? (
 			<Row>
 				<Col>
-					<Nav className="my-4" tabs>
-						{this.state.weekMenu.map(({ day }) => {
-							const { shortName } = day;
-							return (
-								<NavItem key={shortName}>
-									<NavLink
-										className={shortName === this.state.selectedDay ? "active" : ""}
-										onClick={() => {
-											this._switchDay(shortName);
-										}}
-									>
-										{transformDayName(shortName)}
-									</NavLink>
-								</NavItem>
-							);
-						})}
-					</Nav>
+					<DaySwitcher
+						days={this.state.weekMenu.map(menu => menu.day)}
+						activeDay={this.state.selectedDay}
+						onSwitch={this._switchDay}
+					/>
 					<TabContent activeTab={this.state.selectedDay}>
 						{this.state.weekMenu.map(dayMenu => {
-							const { shortName } = dayMenu.day;
+							const { shortName, isHoliday } = dayMenu.day;
 
 							return (
-								<TabPane key={shortName} tabId={shortName}>
-									{dayMenu && <TodayOrder menu={dayMenu} />}
+								<TabPane className="py-2" key={shortName} tabId={shortName}>
+									{!isHoliday && dayMenu && <TodayOrder menu={dayMenu} />}
+									{isHoliday && <Alert color="info">Заказ обедов на выходной день не доступен</Alert>}
 								</TabPane>
 							);
 						})}

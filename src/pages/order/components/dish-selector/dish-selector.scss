@@ -2,7 +2,7 @@
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
-	padding: 0.5rem;
+	padding: 0.5rem 0;
 	width: 100%;
 
 	&__name {
@@ -13,6 +13,12 @@
 		padding: 0 1rem;
 	}
 
+	&__money-unit {
+		color: #808080;
+		font-size: 0.75rem;
+		margin-left: 0.3rem;
+	}
+
 	&__button {
 		align-items: center;
 		background-color: transparent;
@@ -20,8 +26,10 @@
 		display: flex;
 		cursor: pointer;
 		height: 2rem;
+		margin: 0;
 		outline: none !important;
-		padding: 0 0.5rem;
+		padding: 0;
+		padding-left: 0.5rem;
 	}
 
 	&__icon {

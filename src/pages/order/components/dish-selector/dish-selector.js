@@ -8,6 +8,7 @@ import "./dish-selector.scss";
 
 class DishSelector extends React.Component {
 	static propTypes = {
+		className: PropTypes.string,
 		onSelect: PropTypes.func,
 		onUnselect: PropTypes.func,
 		isSelected: PropTypes.bool.isRequired,
@@ -30,12 +31,15 @@ class DishSelector extends React.Component {
 	};
 
 	render() {
-		const { dish, isSelected } = this.props;
+		const { className = "", dish, isSelected } = this.props;
 
 		return (
-			<div className="dish-selector">
+			<div className={`dish-selector ${className}`}>
 				<span className="dish-selector__name">{dish.name}</span>
-				<span className="dish-selector__price">{dish.price && dish.price}</span>
+				<span className="dish-selector__price">
+					{dish.price && dish.price}
+					<span className="dish-selector__money-unit">грн</span>
+				</span>
 				<button className="dish-selector__button" onClick={this._handleClick}>
 					{isSelected ? (
 						<Cancel className="dish-selector__icon dish-selector__icon--cancel" />

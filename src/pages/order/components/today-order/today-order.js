@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Col, Row, Alert } from "reactstrap";
 
-import DishSelector from "../dish-view/dish-selector";
+import DishSelector from "../dish-selector/dish-selector";
 import ShoppingBasket from "../shopping-basket/shopping-basket";
 import DayMenu from "../../../../entities/day-menu";
 import RootContext from "../../../../store/root-context";
@@ -84,7 +84,9 @@ export default class TodayOrder extends React.Component {
 				headerClassName="meal-category__title"
 				caption={category.name}
 			>
-				<div className="meal-category__dishes">{this._renderDishes(category.dishes)}</div>
+				<div className="meal-category__dishes today-order-menu__dishes">
+					{this._renderDishes(category.dishes)}
+				</div>
 			</Expander>
 		);
 	}
@@ -94,7 +96,7 @@ export default class TodayOrder extends React.Component {
 	 */
 	_renderSupplier(supplier) {
 		return (
-			<div key={supplier.id} className="provider">
+			<div key={supplier.id} className="provider border">
 				<div className="provider__title">{supplier.name}</div>
 				{supplier.categories.map(category => {
 					return this._renderCategory(category);
@@ -115,12 +117,17 @@ export default class TodayOrder extends React.Component {
 					</Col>
 				) : (
 					<>
-						<Col sm={{ size: 12, order: 2 }} md={{ size: 8, order: 1 }}>
+						<Col
+							className="today-order-menu"
+							xs={{ size: 12, order: 2 }}
+							sm={{ size: 12, order: 2 }}
+							md={{ size: 8, order: 1 }}
+						>
 							{suppliers.map(supplier => {
 								return this._renderSupplier(supplier);
 							})}
 						</Col>
-						<Col sm={{ size: 12, order: 1 }} md={{ size: 4, order: 2 }}>
+						<Col xs={{ size: 12, order: 1 }} sm={{ size: 12, order: 1 }} md={{ size: 4, order: 2 }}>
 							<ShoppingBasket
 								dishes={this.state.selectedDishes}
 								onMakeOrder={this._handleOrder}

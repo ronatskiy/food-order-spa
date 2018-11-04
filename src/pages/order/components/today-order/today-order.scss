@@ -1,4 +1,6 @@
 .provider {
+	margin-bottom: 1rem;
+
 	&__title {
 		background: #5199db;
 		color: #fff;
@@ -10,5 +12,11 @@
 	&__title {
 		background: #e4f3ff;
 		padding: 0.3rem 1rem;
+	}
+}
+
+.today-order-menu {
+	&__dishes {
+		padding: 0 1rem;
 	}
 }

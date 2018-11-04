@@ -1,7 +1,8 @@
 .shopping-basket {
 	position: sticky;
-	top: 0;
+	top: 4.5rem;
 	padding: 1rem;
+	margin-bottom: 1rem;
 
 	&__payment {
 		margin-bottom: 1.5rem;
@@ -19,8 +20,6 @@
 
 	&__dishes {
 		margin-bottom: 1.5rem;
-		margin-left: -0.5rem;
-		margin-right: -1rem;
 	}
 
 	&__order-button {}

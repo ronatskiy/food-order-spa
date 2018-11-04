@@ -68,7 +68,7 @@ class App extends React.Component {
 						longOperation: this.longOperation,
 					}}
 				>
-					<Header className="layout__header" />
+					<Header className="layout__header fixed-top" />
 					<main className="layout__main">
 						<Container>
 							<Route
