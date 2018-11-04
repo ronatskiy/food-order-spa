@@ -1,0 +1,14 @@
+.user {
+    align-items: center;
+    display: flex;
+
+    &__logo {
+        height: 1.5rem;
+        
+        width: 1.5rem;
+    }
+
+    &__name {
+        margin-left: 0.5rem;
+    }
+}
