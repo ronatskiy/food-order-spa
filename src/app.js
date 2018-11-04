@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import PropTypes from "prop-types";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Container } from "reactstrap";
 
@@ -15,8 +16,12 @@ const MyOrder = React.lazy(() => import("./pages/my-order/index"));
 const MyWeekOrder = React.lazy(() => import("./pages/week-order/index"));
 
 class App extends React.Component {
+	static propTypes = {
+		isAuthenticated: PropTypes.bool.isRequired,
+	};
+
 	state = {
-		isAuthenticated: false,
+		isAuthenticated: this.props.isAuthenticated,
 		isLoading: false,
 	};
 
@@ -32,10 +37,7 @@ class App extends React.Component {
 		});
 
 		try {
-			console.log("before")
 			const result = await operation();
-
-			console.log("after")
 			this.setState({
 				isLoading: false,
 			});

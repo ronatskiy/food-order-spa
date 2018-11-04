@@ -20,6 +20,12 @@ export default class TodayOrder extends React.Component {
 		isOrdered: false,
 	};
 
+	_getSelectedSupplier() {
+		return this.props.menu.suppliers.find(supplier =>
+			supplier.allDishes.some(dish => this.state.selectedDishes.includes(dish)),
+		);
+	}
+
 	_handleOrder = async () => {
 		try {
 			await this.context.longOperation(() => this.context.webApi.orderLunch(this.state.selectedDishes || []));
@@ -95,12 +101,16 @@ export default class TodayOrder extends React.Component {
 	 * @param {Supplier} supplier
 	 */
 	_renderSupplier(supplier) {
+		const selectedSupplier = this._getSelectedSupplier();
+		const categoriesCanBeShown = !selectedSupplier || selectedSupplier.id === supplier.id;
+
 		return (
-			<div key={supplier.id} className="provider border">
-				<div className="provider__title">{supplier.name}</div>
-				{supplier.categories.map(category => {
-					return this._renderCategory(category);
-				})}
+			<div key={supplier.id} className="supplier border">
+				<div className="supplier__title">{supplier.name}</div>
+				{categoriesCanBeShown &&
+					supplier.categories.map(category => {
+						return this._renderCategory(category);
+					})}
 			</div>
 		);
 	}
@@ -108,12 +118,13 @@ export default class TodayOrder extends React.Component {
 	render() {
 		const { suppliers } = this.props.menu;
 		const { isOrdered } = this.state;
+		console.log(this._getSelectedSupplier());
 
 		return suppliers.length > 0 ? (
 			<Row>
 				{isOrdered ? (
 					<Col>
-						<Alert color="success">Обед заказ успешно!</Alert>
+						<Alert color="success">Обед заказан успешно!</Alert>
 					</Col>
 				) : (
 					<>

@@ -1,4 +1,10 @@
-.provider {
+.today-order-menu {
+	&__dishes {
+		padding: 0 1rem;
+	}
+}
+
+.supplier {
 	margin-bottom: 1rem;
 
 	&__title {
@@ -12,11 +18,5 @@
 	&__title {
 		background: #e4f3ff;
 		padding: 0.3rem 1rem;
-	}
-}
-
-.today-order-menu {
-	&__dishes {
-		padding: 0 1rem;
 	}
 }
