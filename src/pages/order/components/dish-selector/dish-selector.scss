@@ -1,9 +1,22 @@
 .dish-selector {
+	$b: &;
+	$gray: #808080;
+
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
 	padding: 0.5rem 0;
 	width: 100%;
+
+	&--disabled {
+		#{$b}__name {
+			color: $gray;
+		}
+
+		#{$b}__icon {
+			fill: $gray;
+		}
+	}
 
 	&__name {
 		flex-grow: 2;
@@ -14,7 +27,7 @@
 	}
 
 	&__money-unit {
-		color: #808080;
+		color: $gray;
 		font-size: 0.75rem;
 		margin-left: 0.3rem;
 	}
@@ -28,8 +41,7 @@
 		height: 2rem;
 		margin: 0;
 		outline: none !important;
-		padding: 0;
-		padding-left: 0.5rem;
+		padding: 0 0 0 0.5rem;
 	}
 
 	&__icon {

@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Col, Row, Alert } from "reactstrap";
 
-import DishSelector from "../dish-selector/dish-selector";
 import ShoppingBasket from "../shopping-basket/shopping-basket";
 import DayMenu from "../../../../entities/day-menu";
 import RootContext from "../../../../store/root-context";
 import Expander from "../../../../components/expander";
+import DishCollection from "../dish-collection";
 import "./today-order.scss";
 
 export default class TodayOrder extends React.Component {
@@ -59,27 +59,6 @@ export default class TodayOrder extends React.Component {
 	};
 
 	/**
-	 * @param {Dish[]} dishes
-	 */
-	_renderDishes(dishes) {
-		return dishes && dishes.length
-			? dishes.map(dish => {
-					const isSelected = this.state.selectedDishes.some(({ id }) => id === dish.id);
-
-					return (
-						<DishSelector
-							key={dish.id}
-							isSelected={isSelected}
-							dish={dish}
-							onSelect={this._handleSelectDish}
-							onUnselect={this._handleUnselectDish}
-						/>
-					);
-			  })
-			: null;
-	}
-
-	/**
 	 * @param {DishCategory} category
 	 */
 	_renderCategory(category) {
@@ -91,7 +70,13 @@ export default class TodayOrder extends React.Component {
 				caption={category.name}
 			>
 				<div className="meal-category__dishes today-order-menu__dishes">
-					{this._renderDishes(category.dishes)}
+					<DishCollection
+						canMultiSelect={category.canMultiSelect}
+						dishes={category.dishes}
+						selectedDishes={this.state.selectedDishes}
+						onSelect={this._handleSelectDish}
+						onUnselect={this._handleUnselectDish}
+					/>
 				</div>
 			</Expander>
 		);

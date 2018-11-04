@@ -7,4 +7,4 @@ import "./index.scss";
 
 const rootElement = document.getElementById("root");
 // TODO: Add isAuthenticated verification from cookies
-ReactDOM.render(<App isAuthenticated={process.env.REACT_APP_IS_AUTHENTICATED} />, rootElement);
+ReactDOM.render(<App isAuthenticated={process.env.REACT_APP_IS_AUTHENTICATED || false} />, rootElement);
