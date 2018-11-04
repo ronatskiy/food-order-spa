@@ -39,13 +39,13 @@ class Header extends React.Component {
 									</Link>
 								</NavItem>
 								<NavItem>
-									<Link className="nav-link" to="/my-order/">
-										Мой обед
+									<Link className="nav-link" to="/week-order/">
+										Заказ на неделю
 									</Link>
 								</NavItem>
 								<NavItem>
-									<Link className="nav-link" to="/week-order/">
-										Заказ на неделю
+									<Link className="nav-link" to="/my-order/">
+										Мой обед
 									</Link>
 								</NavItem>
 							</Nav>
