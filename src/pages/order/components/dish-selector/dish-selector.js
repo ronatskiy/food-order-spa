@@ -38,7 +38,10 @@ class DishSelector extends React.Component {
 		const { className = "", dish, isSelected, disabled } = this.props;
 
 		return (
-			<div className={cn("dish-selector", { "dish-selector--disabled": disabled }, className)}>
+			<div
+				className={cn("dish-selector", { "dish-selector--disabled": disabled }, className)}
+				onClick={this._handleClick}
+			>
 				<span className="dish-selector__name">{dish.name}</span>
 				{dish.price > 0 && (
 					<span className="dish-selector__price">
@@ -46,13 +49,13 @@ class DishSelector extends React.Component {
 						<span className="dish-selector__money-unit">грн</span>
 					</span>
 				)}
-				<button className="dish-selector__button" onClick={this._handleClick}>
+				<span className="dish-selector__button">
 					{isSelected ? (
 						<Cancel className="dish-selector__icon dish-selector__icon--cancel" />
 					) : (
 						<Add className="dish-selector__icon dish-selector__icon--add" />
 					)}
-				</button>
+				</span>
 			</div>
 		);
 	}
