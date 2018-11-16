@@ -15,16 +15,22 @@
     "reactstrap": "6.5.0"
   },
   "devDependencies": {
+    "@types/jest": "23.3.9",
+    "@types/node": "10.12.8",
+    "@types/react": "16.7.6",
+    "@types/react-dom": "16.0.9",
+    "@types/react-router-dom": "4.3.1",
+    "@types/reactstrap": "^6.4.2",
     "eslint-plugin-babel": "5.2.1",
     "eslint-plugin-prettier": "3.0.0",
     "gh-pages": "^2.0.1",
     "node-sass": "4.9.4",
-    "prop-types": "15.6.2"
+    "typescript": "3.1.6"
   },
   "scripts": {
     "start": "yarn && react-scripts start",
     "build": "yarn && react-scripts build",
-    "test": "yarn && react-scripts test --env=jsdom",
+    "test": "yarn && react-scripts test",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build"
   },
@@ -33,5 +39,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "http://localhost:5055"
 }

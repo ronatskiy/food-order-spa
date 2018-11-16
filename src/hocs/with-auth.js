@@ -7,7 +7,7 @@ function withAuth(Control) {
 		static contextType = RootContext;
 
 		handleClick = () => {
-			if (!this.context.auth.isAuthenticated) {
+			if (!this.context.isAuthenticated) {
 				alert("Переходим на страницу аутентификации");
 				return;
 			}
