@@ -1,4 +1,4 @@
-export function transformDayName(day) {
+export function transformDayName(day: string) {
 	if (day === "Mon") {
 		return "Понедельник";
 	}

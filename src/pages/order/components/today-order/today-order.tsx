@@ -1,42 +1,51 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Col, Row, Alert } from "reactstrap";
 
 import ShoppingBasket from "../shopping-basket/shopping-basket";
 import DayMenu from "../../../../entities/day-menu";
-import RootContext from "../../../../store/root-context";
+import { RootContext } from "../../../../store";
 import Expander from "../../../../components/expander";
 import DishCollection from "../dish-collection";
 import "./today-order.scss";
+import Supplier from "../../../../entities/supplier";
+import Dish from "../../../../entities/dish";
+import DishCategory from "../../../../entities/dish-category";
 
-export default class TodayOrder extends React.Component {
+interface Props {
+	menu: DayMenu
+}
+
+interface State {
+	selectedDishes: Dish[];
+	isOrdered: boolean;
+}
+
+export default class TodayOrder extends React.Component<Props, State> {
 	static contextType = RootContext;
-	static propTypes = {
-		menu: PropTypes.instanceOf(DayMenu).isRequired,
-	};
+	public context!: React.ContextType<typeof RootContext>;
 
-	state = {
+	state: State = {
 		selectedDishes: [],
 		isOrdered: false,
 	};
 
-	_getSelectedSupplier() {
-		return this.props.menu.suppliers.find(supplier =>
-			supplier.allDishes.some(dish => this.state.selectedDishes.includes(dish)),
+	private getSelectedSupplier() {
+		return this.props.menu.suppliers.find((supplier: Supplier) =>
+			supplier.allDishes.some((dish: Dish) => this.state.selectedDishes.includes(dish)),
 		);
 	}
 
-	_handleOrder = async () => {
+	private handleOrder = async () => {
 		try {
-			await this.context.longOperation(() => this.context.webApi.orderLunch(this.state.selectedDishes || []));
+			await this.context.longOperation(() => this.context.orderService.orderLunch(this.state.selectedDishes || []));
 
 			this.setState({ selectedDishes: [], isOrdered: true });
 		} catch (e) {
-			console.log(e.message);
+			console.error(e.message);
 		}
 	};
 
-	_handleSelectDish = dishToSelect => {
+	private handleSelectDish = (dishToSelect: Dish) => {
 		const { selectedDishes } = this.state;
 		if (selectedDishes.some(({ id }) => dishToSelect.id === id)) {
 			return;
@@ -48,7 +57,7 @@ export default class TodayOrder extends React.Component {
 		});
 	};
 
-	_handleUnselectDish = dishToUnselect => {
+	private handleUnselectDish = (dishToUnselect: Dish) => {
 		if (this.state.selectedDishes.some(({ id }) => dishToUnselect.id === id)) {
 			this.setState(prevState => {
 				return {
@@ -58,10 +67,7 @@ export default class TodayOrder extends React.Component {
 		}
 	};
 
-	/**
-	 * @param {DishCategory} category
-	 */
-	_renderCategory(category) {
+	private renderCategory(category: DishCategory) {
 		return (
 			<Expander
 				key={category.id}
@@ -74,36 +80,32 @@ export default class TodayOrder extends React.Component {
 						canMultiSelect={category.canMultiSelect}
 						dishes={category.dishes}
 						selectedDishes={this.state.selectedDishes}
-						onSelect={this._handleSelectDish}
-						onUnselect={this._handleUnselectDish}
+						onSelect={this.handleSelectDish}
+						onUnselect={this.handleUnselectDish}
 					/>
 				</div>
 			</Expander>
 		);
 	}
 
-	/**
-	 * @param {Supplier} supplier
-	 */
-	_renderSupplier(supplier) {
-		const selectedSupplier = this._getSelectedSupplier();
+	private renderSupplier(supplier: Supplier) {
+		const selectedSupplier = this.getSelectedSupplier();
 		const categoriesCanBeShown = !selectedSupplier || selectedSupplier.id === supplier.id;
 
 		return (
 			<div key={supplier.id} className="supplier border">
 				<div className="supplier__title">{supplier.name}</div>
 				{categoriesCanBeShown &&
-					supplier.categories.map(category => {
-						return this._renderCategory(category);
+					supplier.categories.map((category: DishCategory) => {
+						return this.renderCategory(category);
 					})}
 			</div>
 		);
 	}
 
-	render() {
+	public render() {
 		const { suppliers } = this.props.menu;
 		const { isOrdered } = this.state;
-		console.log(this._getSelectedSupplier());
 
 		return suppliers.length > 0 ? (
 			<Row>
@@ -119,16 +121,16 @@ export default class TodayOrder extends React.Component {
 							sm={{ size: 12, order: 2 }}
 							md={{ size: 8, order: 1 }}
 						>
-							{suppliers.map(supplier => {
-								return this._renderSupplier(supplier);
+							{suppliers.map((supplier: Supplier) => {
+								return this.renderSupplier(supplier);
 							})}
 						</Col>
 						<Col xs={{ size: 12, order: 1 }} sm={{ size: 12, order: 1 }} md={{ size: 4, order: 2 }}>
 							<ShoppingBasket
 								dishes={this.state.selectedDishes}
-								onMakeOrder={this._handleOrder}
+								onMakeOrder={this.handleOrder}
 								availableMoneyToOrder={51}
-								onUnselectDish={this._handleUnselectDish}
+								onUnselectDish={this.handleUnselectDish}
 							/>
 						</Col>
 					</>

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import cn from "classnames";
 
 import Dish from "../../../../entities/dish";
@@ -7,24 +6,25 @@ import Add from "../../../../components/logos/add";
 import Cancel from "../../../../components/logos/cancel";
 import "./dish-selector.scss";
 
-class DishSelector extends React.Component {
-	static propTypes = {
-		className: PropTypes.string,
-		onSelect: PropTypes.func,
-		onUnselect: PropTypes.func,
-		isSelected: PropTypes.bool,
-		disabled: PropTypes.bool,
-		dish: PropTypes.instanceOf(Dish).isRequired,
-	};
+interface Props {
+	className: string;
+	onSelect(dish: Dish): void;
+	onUnselect(dish: Dish): void;
+	isSelected: boolean;
+	disabled: boolean;
+	dish: Dish,
+}
 
-	static defaultProps = {
+class DishSelector extends React.Component<Props> {
+	static defaultProps: Pick<Props, "className" | "isSelected" | "disabled" | "onSelect" | "onUnselect"> = {
+		className: "",
 		isSelected: false,
 		disabled: false,
 		onSelect() {},
 		onUnselect() {},
 	};
 
-	_handleClick = () => {
+	private handleClick = () => {
 		const { isSelected, dish, onSelect, onUnselect } = this.props;
 
 		if (isSelected) {
@@ -40,7 +40,7 @@ class DishSelector extends React.Component {
 		return (
 			<div
 				className={cn("dish-selector", { "dish-selector--disabled": disabled }, className)}
-				onClick={this._handleClick}
+				onClick={this.handleClick}
 			>
 				<span className="dish-selector__name">{dish.name}</span>
 				{dish.price > 0 && (

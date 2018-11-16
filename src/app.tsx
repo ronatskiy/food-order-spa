@@ -28,17 +28,6 @@ class App extends React.Component<Props, State> {
 		isLoading: false,
 	};
 
-	private toggleAuth = () => {
-
-		this.setState(({ store }) => {
-			store.authService.toggleAuth();
-
-			return ({
-				store,
-			});
-		});
-	};
-
 	longOperation = async (operation: () => Promise<any>) => {
 		this.setState({
 			isLoading: true,

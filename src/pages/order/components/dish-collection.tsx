@@ -1,32 +1,31 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import Dish from "../../../entities/dish";
 import DishSelector from "./dish-selector/dish-selector";
 
-class DishCollection extends React.Component {
-	static propTypes = {
-		dishes: PropTypes.arrayOf(PropTypes.instanceOf(Dish)).isRequired,
-		selectedDishes: PropTypes.arrayOf(PropTypes.instanceOf(Dish)).isRequired,
-		canMultiSelect: PropTypes.bool,
-		onSelect: PropTypes.func.isRequired,
-		onUnselect: PropTypes.func.isRequired,
-	};
+interface Props {
+	dishes: Dish[];
+	selectedDishes: Dish[];
+	canMultiSelect: boolean;
+	onSelect(dish: Dish): void;
+	onUnselect(dish: Dish): void;
+}
 
+class DishCollection extends React.Component<Props> {
 	static defaultProps = {
 		canMultiSelect: true,
 	};
 
-	get _onlySingleSelect() {
+	private get onlySingleSelect() {
 		return !this.props.canMultiSelect;
 	}
 
-	get _isSomeDishSelected() {
+	private get isSomeDishSelected() {
 		return this.props.dishes.some(dish => this.props.selectedDishes.includes(dish));
 	}
 
-	_handleSelectDish = dish => {
-		if (this._onlySingleSelect && this._isSomeDishSelected) {
+	private handleSelectDish = (dish: Dish) => {
+		if (this.onlySingleSelect && this.isSomeDishSelected) {
 			alert("Множественный выбор запрещен!!!");
 			return;
 		}
@@ -34,7 +33,7 @@ class DishCollection extends React.Component {
 		this.props.onSelect(dish);
 	};
 
-	render() {
+	public render() {
 		const { dishes, selectedDishes, onUnselect } = this.props;
 
 		return dishes.map(dish => {
@@ -45,8 +44,8 @@ class DishCollection extends React.Component {
 					key={dish.id}
 					dish={dish}
 					isSelected={isSelected}
-					disabled={this._onlySingleSelect && this._isSomeDishSelected && !isSelected}
-					onSelect={this._handleSelectDish}
+					disabled={this.onlySingleSelect && this.isSomeDishSelected && !isSelected}
+					onSelect={this.handleSelectDish}
 					onUnselect={onUnselect}
 				/>
 			);
