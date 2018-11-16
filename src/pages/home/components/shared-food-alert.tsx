@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Alert, Badge, Collapse } from "reactstrap";
 
-import ChevronDown from "../../../components/logos/chevron-down";
+import { ReactComponent as ChevronDown } from "../../../components/logos/chevron-down.svg";
 import TakeFoodButton from "./take-food-button";
 import DishView from "./dish-view";
 import Dish from "../../../entities/dish";
@@ -15,7 +15,7 @@ interface State {
 	expanded: boolean;
 }
 
-class SharedFoodAlert extends React.PureComponent<Props, State> {
+class SharedFoodAlert extends React.Component<Props, State> {
 	state: State = {
 		expanded: false,
 	};

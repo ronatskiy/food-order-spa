@@ -1,7 +1,3 @@
-import RootContext from "./root-context";
-import Store from "./store";
+import RootStore from "./root-store";
 
-export {
-	Store,
-	RootContext,
-}
+export { RootStore };

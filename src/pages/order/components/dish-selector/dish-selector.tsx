@@ -2,8 +2,8 @@ import React from "react";
 import cn from "classnames";
 
 import Dish from "../../../../entities/dish";
-import Add from "../../../../components/logos/add";
-import Cancel from "../../../../components/logos/cancel";
+import { ReactComponent as Add } from "../../../../components/logos/add.svg";
+import { ReactComponent as Cancel } from "../../../../components/logos/cancel.svg";
 import "./dish-selector.scss";
 
 interface Props {

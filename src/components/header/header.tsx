@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import { Container, Navbar, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
 
 import User from "./user/user";
-import RootContext from "../../store/root-context";
+import { RootStore } from "../../store";
 
 import "./header.scss";
+import { observer, inject } from "mobx-react";
+import { action, observable } from "mobx";
 
 interface Props {
+	rootStore?: RootStore;
 	className: string;
 }
 
@@ -15,24 +18,19 @@ interface State {
 	isOpen: boolean;
 }
 
+@inject("rootStore")
+@observer
 class Header extends React.Component<Props, State> {
-	static contextType = RootContext;
-	public context!: React.ContextType<typeof RootContext>;
+	@observable
+	isOpen: boolean = false;
 
-	state = {
-		isOpen: false,
-	};
-
-	toggle = () => {
-		this.setState({
-			isOpen: !this.state.isOpen,
-		});
-	};
+	toggle = action(() => {
+		this.isOpen = !this.isOpen;
+	});
 
 	render() {
 		const { className } = this.props;
-		const { isAuthenticated, authService } = this.context;
-
+		const { identity, authService } = this.props.rootStore!;
 
 		return (
 			<header className={`header ${className}`}>
@@ -42,7 +40,7 @@ class Header extends React.Component<Props, State> {
 							Горячие обеды
 						</Link>
 						<NavbarToggler onClick={this.toggle} />
-						<Collapse isOpen={this.state.isOpen} navbar>
+						<Collapse isOpen={this.isOpen} navbar>
 							<Nav className="ml-auto mr-auto" navbar>
 								<NavItem>
 									<Link className="nav-link" to="/order/">
@@ -62,8 +60,8 @@ class Header extends React.Component<Props, State> {
 							</Nav>
 							<Nav navbar>
 								<NavItem>
-									{!isAuthenticated ? (
-										<NavLink onClick={() => authService.toggleAuth()} href="#">
+									{!identity.isAuthenticated ? (
+										<NavLink onClick={() => authService.login()} href="#">
 											Вход
 										</NavLink>
 									) : (

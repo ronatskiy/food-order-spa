@@ -2,7 +2,7 @@ import React from "react";
 
 import visibleOnlyForAuthenticatedUser from "../../hocs/visible-only-for-authenticated-user";
 
-class MyOrder extends React.PureComponent {
+class MyOrder extends React.Component {
 	render() {
 		return (
 			<section>

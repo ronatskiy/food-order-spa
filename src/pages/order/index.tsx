@@ -5,10 +5,12 @@ import visibleOnlyForAuthenticatedUser from "../../hocs/visible-only-for-authent
 import TodayOrder from "./components/today-order/today-order";
 import DaySwitcher from "./components/day-switcher";
 import "./index.scss";
-import { RootContext } from "../../store";
+import { RootStore } from "../../store";
 import DayMenu from "../../entities/day-menu";
 
-interface Props {}
+interface Props {
+	rootStore?: RootStore;
+}
 
 interface State {
 	weekMenu: DayMenu[]
@@ -16,9 +18,6 @@ interface State {
 }
 
 class Order extends React.Component<Props, State> {
-	public static contextType = RootContext;
-	public context!: React.ContextType<typeof RootContext>;
-
 	state: State = {
 		weekMenu: [],
 		selectedDay: "",
@@ -26,7 +25,7 @@ class Order extends React.Component<Props, State> {
 
 	public async componentDidMount() {
 		try {
-			const { longOperation, dishMenuService } = this.context;
+			const { longOperation, dishMenuService } = this.props.rootStore!;
 			const weekMenu: DayMenu[] = await longOperation(() => dishMenuService.getWeekMenu());
 			const [dayMenu] = weekMenu;
 

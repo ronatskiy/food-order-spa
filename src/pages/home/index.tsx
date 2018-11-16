@@ -1,39 +1,35 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 
-import { RootContext } from "../../store";
+import { RootStore } from "../../store";
 import SharedFoodAlert from "./components/shared-food-alert";
 import TodayOrdersTable from "./components/today-orders-table";
 import transformToUsersOrders from "./transformators/transform-to-users-orders";
 import TodayUserOrder from "../../entities/today-user-order";
 import { UserOrder } from "../../entities/types";
+import { inject, observer } from "mobx-react";
 
-interface Props {}
-
-interface State {
-	todayOrders: UserOrder[],
-	sharedTodayOrders: UserOrder[]
+interface Props {
+	rootStore?: RootStore;
 }
 
-class Home extends React.Component<Props, State> {
-	public static contextType = RootContext;
-	public context!: React.ContextType<typeof RootContext>;
+interface State {
+	todayOrders: UserOrder[];
+	sharedTodayOrders: UserOrder[];
+}
 
+@inject("rootStore")
+@observer
+class Home extends React.Component<Props, State> {
 	state: State = {
 		todayOrders: [],
 		sharedTodayOrders: [],
 	};
 
 	async componentDidMount() {
-		const { longOperation, orderService } = this.context;
 		try {
-			let todayOrdersData: TodayUserOrder[] = [];
-			let sharedTodayOrdersData: TodayUserOrder[] = [];
-
-			await longOperation(async () => {
-				sharedTodayOrdersData = await orderService.getSharedTodayOrders();
-				todayOrdersData = await orderService.getTodayOrders();
-			});
+			let todayOrdersData: TodayUserOrder[] = await this.props.rootStore!.fetchTodayOrders();
+			let sharedTodayOrdersData: TodayUserOrder[] = await this.props.rootStore!.fetchSharedTodayOrders();
 
 			this.setState({
 				todayOrders: transformToUsersOrders(todayOrdersData ? todayOrdersData : []),

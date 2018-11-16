@@ -1,9 +1,10 @@
 import React from "react";
 import { Col, Row, Alert } from "reactstrap";
+import { inject, observer } from "mobx-react";
 
 import ShoppingBasket from "../shopping-basket/shopping-basket";
 import DayMenu from "../../../../entities/day-menu";
-import { RootContext } from "../../../../store";
+import { RootStore } from "../../../../store";
 import Expander from "../../../../components/expander";
 import DishCollection from "../dish-collection";
 import "./today-order.scss";
@@ -12,7 +13,8 @@ import Dish from "../../../../entities/dish";
 import DishCategory from "../../../../entities/dish-category";
 
 interface Props {
-	menu: DayMenu
+	rootStore?: RootStore;
+	menu: DayMenu;
 }
 
 interface State {
@@ -20,10 +22,9 @@ interface State {
 	isOrdered: boolean;
 }
 
+@inject("rootStore")
+@observer
 export default class TodayOrder extends React.Component<Props, State> {
-	static contextType = RootContext;
-	public context!: React.ContextType<typeof RootContext>;
-
 	state: State = {
 		selectedDishes: [],
 		isOrdered: false,
@@ -37,7 +38,8 @@ export default class TodayOrder extends React.Component<Props, State> {
 
 	private handleOrder = async () => {
 		try {
-			await this.context.longOperation(() => this.context.orderService.orderLunch(this.state.selectedDishes || []));
+			await this.props.rootStore!.longOperation(() =>
+				this.props.rootStore!.orderService.orderLunch(this.state.selectedDishes || []));
 
 			this.setState({ selectedDishes: [], isOrdered: true });
 		} catch (e) {

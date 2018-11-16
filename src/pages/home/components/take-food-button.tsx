@@ -1,13 +1,13 @@
 import React from "react";
 import { Button } from "reactstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 
 interface Props {
 	name: string;
 	history: any;
 }
 
-class TakeFoodButton extends React.PureComponent<Props> {
+class TakeFoodButton extends React.Component<Props & RouteComponentProps<{}>> {
 	handleClick = () => {
 		alert(
 			"Вы забронировали обед пользователя " +
@@ -26,5 +26,4 @@ class TakeFoodButton extends React.PureComponent<Props> {
 	}
 }
 
-// @ts-ignore
 export default withRouter(TakeFoodButton);

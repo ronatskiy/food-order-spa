@@ -1,6 +1,6 @@
 import React from "react";
 
-import UserLogo from "./user-logo";
+import { ReactComponent as UserLogo } from "./user-logo.svg";
 import "./user.scss";
 
 interface Props {

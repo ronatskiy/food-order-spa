@@ -4,4 +4,8 @@ export default class AuthService {
 	public toggleAuth() {
 		this.isAuthenticated = !this.isAuthenticated;
 	}
+
+	public login() {
+		return Promise.resolve(this.isAuthenticated);
+	}
 }
