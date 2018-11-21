@@ -1,8 +1,8 @@
 import React from "react";
 import { Collapse } from "reactstrap";
 
-import { ReactComponent as ChevronDown } from "./logos/chevron-down.svg";
-import { ReactComponent as ChevronUp } from "./logos/chevron-up.svg";
+import { ReactComponent as ChevronDown } from "../images/chevron-down.svg";
+import { ReactComponent as ChevronUp } from "../images/chevron-up.svg";
 
 interface Props {
 	className: string;

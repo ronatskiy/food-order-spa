@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 
 import Dish from "../../../../entities/dish";
 import DishSelector from "../dish-selector/dish-selector";
-import { ReactComponent as ShoppingCart } from "../../../../components/logos/shopping-cart.svg";
+import { ReactComponent as ShoppingCart } from "../../../../images/shopping-cart.svg";
 import "./shopping-basket.scss";
 
 function calcOverpayment(payment: number, availableMoneyToOrder: number) {
