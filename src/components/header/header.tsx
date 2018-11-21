@@ -1,6 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Navbar, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
+import {
+	Container,
+	Navbar,
+	NavbarToggler,
+	Collapse,
+	Nav,
+	NavItem,
+	NavLink,
+	UncontrolledDropdown,
+	DropdownToggle,
+	DropdownMenu, DropdownItem
+} from "reactstrap";
 
 import User from "./user/user";
 import { RootStore } from "../../store";
@@ -14,13 +25,9 @@ interface Props {
 	className: string;
 }
 
-interface State {
-	isOpen: boolean;
-}
-
 @inject("rootStore")
 @observer
-class Header extends React.Component<Props, State> {
+class Header extends React.Component<Props> {
 	@observable
 	isOpen: boolean = false;
 
@@ -59,17 +66,29 @@ class Header extends React.Component<Props, State> {
 								</NavItem>
 							</Nav>
 							<Nav navbar>
-								<NavItem>
-									{!identity.isAuthenticated ? (
+								{!identity.isAuthenticated && (
+									<NavItem>
 										<NavLink onClick={() => identity.login()} href="#">
 											Вход
 										</NavLink>
-									) : (
-										<span className="navbar-text">
+									</NavItem>
+								)}
+								{identity.isAuthenticated && (
+									<UncontrolledDropdown nav inNavbar>
+										<DropdownToggle nav caret>
 											<User name={identity.currentUser!.fullName} />
-										</span>
-									)}
-								</NavItem>
+										</DropdownToggle>
+										<DropdownMenu right>
+											<DropdownItem disabled>
+												Профиль
+											</DropdownItem>
+											<DropdownItem divider />
+											<DropdownItem onClick={() => identity.logout()}>
+												Выход
+											</DropdownItem>
+										</DropdownMenu>
+									</UncontrolledDropdown>
+								)}
 							</Nav>
 						</Collapse>
 					</Navbar>

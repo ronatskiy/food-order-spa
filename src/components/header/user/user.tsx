@@ -1,13 +1,13 @@
 import React from "react";
 
-import { ReactComponent as UserLogo } from "./user-logo.svg";
+import { ReactComponent as UserLogo } from "../../../images/user-logo.svg";
 import "./user.scss";
 
 interface Props {
 	name: string;
 }
 
-const User = ({ name }: Props) => {
+const User: React.FC<Props> = ({ name }) => {
 	return (
 		<div className="user">
 			<UserLogo className="user__logo" />

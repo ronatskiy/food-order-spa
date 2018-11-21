@@ -24,10 +24,10 @@ class IdentityStore {
 		})
 	}
 
-	// @action
-	// public logout() {
-	// 	this.currentUser = null;
-	// }
+	@action
+	public logout() {
+		this.currentUser = null;
+	}
 }
 
 export default IdentityStore;
