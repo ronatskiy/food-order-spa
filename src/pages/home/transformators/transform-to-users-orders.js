@@ -1,22 +1,27 @@
-import Dish from "../../../entities/dish";
+import User from "../../../entities/user";
+import Day from "../../../entities/day";
 
+/**
+ *
+ * @param todayOrders
+ * @return {UserOrder[]}
+ */
 function transformToUsersOrders(todayOrders) {
 	if (!todayOrders) {
 		return [];
 	}
 
-	return todayOrders.map(({ userName, suppliers }) => {
+	return todayOrders.map(({ userName, userId, dayName, suppliers }) => {
 		const [firstSupplier] = suppliers; //IMPORTANT!!! The system must allow order only single supplier's food
-		const { supplierId, supplierName, categories } = firstSupplier;
+		const { supplierId, supplierName, allDishes } = firstSupplier;
 
 		return {
-			userName,
+			day: new Day({ shortName: dayName }),
+			user: new User(userName, userId),
 			order: {
 				supplierId,
 				supplierName,
-				dishes: categories.reduce((acc, category) => {
-					return [...acc, ...category.dishes.map(dish => new Dish(dish))];
-				}, []),
+				dishes: allDishes,
 			},
 		};
 	});

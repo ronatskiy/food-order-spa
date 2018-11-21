@@ -4,7 +4,7 @@ import OrderService from "./order-service";
 
 export function createServices(apiEndpoint: string, isAuth: boolean) {
 	return {
-		dishMenuService: new MenuService(apiEndpoint),
+		menuService: new MenuService(apiEndpoint),
 		orderService: new OrderService(apiEndpoint),
 		authService: new AuthService(isAuth),
 	};

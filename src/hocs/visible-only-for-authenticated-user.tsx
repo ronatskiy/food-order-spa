@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert, Button } from "reactstrap";
 import { RootStore } from "../store";
-import { observer, inject } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 interface Props {
 	onLogin(): void;
@@ -25,12 +25,12 @@ interface InjectedProps {
 
 function visibleOnlyForAuthenticatedUser<T extends InjectedProps>(Control: React.ComponentType<T>) {
 	return inject("rootStore")(observer(
-		class extends React.Component<T> {
-			render() {
-				return this.props.rootStore!.identity.isAuthenticated
-					? (<Control {...this.props} />)
-					: (<NotAuthenticatedAlert onLogin={() => this.props.rootStore!.authService.login()} />);
-			}
+		function (props: T) {
+			const { identity } = props.rootStore!;
+
+			return identity.isAuthenticated
+				? (<Control {...props} />)
+				: (<NotAuthenticatedAlert onLogin={() => identity.login()}/>);
 		}
 	))
 }

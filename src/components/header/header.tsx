@@ -30,7 +30,7 @@ class Header extends React.Component<Props, State> {
 
 	render() {
 		const { className } = this.props;
-		const { identity, authService } = this.props.rootStore!;
+		const { identity } = this.props.rootStore!;
 
 		return (
 			<header className={`header ${className}`}>
@@ -61,12 +61,12 @@ class Header extends React.Component<Props, State> {
 							<Nav navbar>
 								<NavItem>
 									{!identity.isAuthenticated ? (
-										<NavLink onClick={() => authService.login()} href="#">
+										<NavLink onClick={() => identity.login()} href="#">
 											Вход
 										</NavLink>
 									) : (
 										<span className="navbar-text">
-											<User name="Roman" />
+											<User name={identity.currentUser!.fullName} />
 										</span>
 									)}
 								</NavItem>

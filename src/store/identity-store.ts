@@ -1,22 +1,33 @@
-import { observable, action, runInAction } from "mobx";
+import { observable, action, runInAction, computed } from "mobx";
 import AuthService from "../services/auth-service";
+import User from "../entities/user";
 
 class IdentityStore {
 	constructor(private readonly authService: AuthService) {
 		this.login();
 	}
 
+	@observable
+	public currentUser: User | null = null;
+
+	@computed
+	public get isAuthenticated() {
+		return this.currentUser !== null;
+	};
+
 	@action
-	private async login() {
-		const isAuthenticated = await this.authService.login();
+	public async login() {
+		const user = await this.authService.login();
 
 		runInAction(() => {
-			this.isAuthenticated = isAuthenticated;
+			this.currentUser = user;
 		})
 	}
 
-	@observable
-	public isAuthenticated = false;
+	// @action
+	// public logout() {
+	// 	this.currentUser = null;
+	// }
 }
 
 export default IdentityStore;

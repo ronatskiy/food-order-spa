@@ -1,8 +1,20 @@
 import Supplier from "./supplier";
 import Day from "./day";
 
+interface DayMenuRawData {
+ 	suppliers:[];
+	weekDay: any;
+	weekDayDate: string;
+	isHoliday: boolean;
+	orderedDishes: [];
+}
+
 class DayMenu {
-	constructor({ suppliers, weekDay, weekDayDate = "", isHoliday = false, orderedDishes = [] }) {
+	public day: Day;
+	public suppliers: Supplier[];
+	public orderedDishes: [];
+
+	constructor({ suppliers, weekDay, weekDayDate = "", isHoliday = false, orderedDishes = [] }: DayMenuRawData) {
 		this.day = new Day({
 			shortName: weekDay,
 			date: weekDayDate,

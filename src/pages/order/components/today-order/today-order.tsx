@@ -1,20 +1,20 @@
 import React from "react";
 import { Col, Row, Alert } from "reactstrap";
-import { inject, observer } from "mobx-react";
 
 import ShoppingBasket from "../shopping-basket/shopping-basket";
 import DayMenu from "../../../../entities/day-menu";
-import { RootStore } from "../../../../store";
 import Expander from "../../../../components/expander";
 import DishCollection from "../dish-collection";
 import "./today-order.scss";
 import Supplier from "../../../../entities/supplier";
 import Dish from "../../../../entities/dish";
 import DishCategory from "../../../../entities/dish-category";
+import { Order } from "../../../../entities/types";
+import Day from "../../../../entities/day";
 
 interface Props {
-	rootStore?: RootStore;
 	menu: DayMenu;
+	onOrderLunch(day: Day, order: Order): Promise<void>;
 }
 
 interface State {
@@ -22,29 +22,27 @@ interface State {
 	isOrdered: boolean;
 }
 
-@inject("rootStore")
-@observer
 export default class TodayOrder extends React.Component<Props, State> {
 	state: State = {
 		selectedDishes: [],
 		isOrdered: false,
 	};
 
-	private getSelectedSupplier() {
+	private getSelectedSupplier(): Supplier | undefined {
 		return this.props.menu.suppliers.find((supplier: Supplier) =>
 			supplier.allDishes.some((dish: Dish) => this.state.selectedDishes.includes(dish)),
 		);
 	}
 
 	private handleOrder = async () => {
-		try {
-			await this.props.rootStore!.longOperation(() =>
-				this.props.rootStore!.orderService.orderLunch(this.state.selectedDishes || []));
+		const { onOrderLunch, menu } = this.props;
 
-			this.setState({ selectedDishes: [], isOrdered: true });
-		} catch (e) {
-			console.error(e.message);
-		}
+		await onOrderLunch(menu.day ,{
+			supplierName: this.getSelectedSupplier()!.name,
+			dishes: this.state.selectedDishes,
+		} as Order);
+
+		this.setState({ selectedDishes: [], isOrdered: true });
 	};
 
 	private handleSelectDish = (dishToSelect: Dish) => {

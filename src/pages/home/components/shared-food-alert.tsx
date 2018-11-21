@@ -55,9 +55,9 @@ class SharedFoodAlert extends React.Component<Props, State> {
 							</tr>
 						</thead>
 						<tbody>
-							{sharedTodayOrders.map(({ userName, order }) => (
-								<tr key={userName}>
-									<td>{userName}</td>
+							{sharedTodayOrders.map(({ user, order }) => (
+								<tr key={user.fullName}>
+									<td>{user.fullName}</td>
 									<td>
 										{order && (
 											<>
@@ -70,7 +70,7 @@ class SharedFoodAlert extends React.Component<Props, State> {
 										)}
 									</td>
 									<td className="text-right">
-										<TakeFoodButton name={userName} />
+										<TakeFoodButton name={user.fullName} />
 									</td>
 								</tr>
 							))}

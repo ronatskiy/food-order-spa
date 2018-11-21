@@ -21,9 +21,9 @@ const TodayOrdersTable = ({ todayOrders }: Props) => {
 					</tr>
 				</thead>
 				<tbody>
-					{todayOrders.map(({ userName, order }) => (
-						<tr key={userName}>
-							<td>{userName}</td>
+					{todayOrders.map(({ user, order }) => (
+						<tr key={user.fullName}>
+							<td>{user.fullName}</td>
 							<td>
 								{order && (
 									<>

@@ -10,7 +10,7 @@ export default class OperationManager {
 	}
 
 	@action
-	async runWithProgress(operation: () => Promise<any>) {
+	async runWithProgress<T>(operation: () => Promise<T>) {
 		this.pendingTasksCount++;
 
 		return operation().finally(() => {

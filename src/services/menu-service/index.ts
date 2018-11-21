@@ -10,6 +10,7 @@ export default class MenuService {
 
 	public async getWeekMenu() {
 		const menu = (await axios.get(this.api)).data;
+
 		return menu.map((wd: any) => new DayMenu(wd));
 	}
 }
