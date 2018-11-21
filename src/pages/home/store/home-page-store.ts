@@ -18,11 +18,11 @@ class HomePageStore {
 	@action.bound
 	private async fetchAllData() {
 		try {
-			let todayOrdersData = await this.fetchTodayOrders();
+			let todayOrders = await this.fetchTodayOrders();
 			let sharedTodayOrdersData = await this.fetchSharedTodayOrders();
 
 			runInAction(() => {
-				this.todayOrders = transformToUsersOrders(todayOrdersData);
+				this.todayOrders = todayOrders;
 				this.sharedTodayOrders = transformToUsersOrders(sharedTodayOrdersData);
 			});
 		} catch (e) {

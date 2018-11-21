@@ -15,11 +15,11 @@ class DayMenu {
 	public orderedDishes: [];
 
 	constructor({ suppliers, weekDay, weekDayDate = "", isHoliday = false, orderedDishes = [] }: DayMenuRawData) {
-		this.day = new Day({
-			shortName: weekDay,
-			date: weekDayDate,
-			isHoliday: isHoliday,
-		});
+		this.day = new Day(
+			weekDay,
+			weekDayDate,
+			isHoliday,
+		);
 		this.suppliers = suppliers.map(supplier => new Supplier(supplier));
 		this.orderedDishes = orderedDishes;
 	}

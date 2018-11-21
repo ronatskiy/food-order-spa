@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Dish from "../../../entities/dish";
 
 import "./dish-view.scss";
@@ -7,16 +7,10 @@ interface Props {
 	dish: Dish;
 }
 
-const DishView = ({ dish }: Props) => {
+const DishView: FC<Props> = ({ dish }) => {
 	return (
-		<div className="dish-view px-2">
+		<div className="dish-view">
 			<span className="dish-view__name">{dish.name}</span>
-			{dish.price > 0 && (
-				<span className="dish-view__price">
-					<span className="dish-view__price-value">{dish.price}</span>
-					<span className="dish-view__money-unit">грн</span>
-				</span>
-			)}
 		</div>
 	);
 };

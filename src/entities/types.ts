@@ -8,7 +8,7 @@ export interface Order {
 }
 
 export interface UserOrder {
-	day: Day;
 	user: User;
+	day: Day;
 	order: Order;
 }

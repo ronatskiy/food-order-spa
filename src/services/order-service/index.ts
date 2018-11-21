@@ -10,10 +10,8 @@ export default class OrderService {
 		this.api = `${api}/order`;
 	}
 
-	public async getTodayOrders(): Promise<TodayUserOrder[]> {
-		const orders = (await axios.get(`${this.api}/today-orders/`)).data;
-
-		return orders.map((uo: any) => new TodayUserOrder(uo.weekDay, uo.userName, uo.suppliers));
+	public async getTodayOrders(): Promise<UserOrder[]> {
+		return (await axios.get(`${this.api}/today-orders/`)).data;
 	}
 
 	public async getSharedTodayOrders(): Promise<TodayUserOrder[]> {

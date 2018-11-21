@@ -3,7 +3,7 @@ import { Col, Row } from "reactstrap";
 import { inject, observer } from "mobx-react";
 
 import SharedFoodAlert from "./components/shared-food-alert";
-import TodayOrdersTable from "./components/today-orders-table";
+import TodayOrders from "./components/today-orders";
 import HomePageStore from "./store/home-page-store";
 
 interface Props {
@@ -22,7 +22,7 @@ function Home({ homePageStore }: Props) {
 					</Col>
 				</Row>
 			)}
-			{todayOrders.length > 0 && <TodayOrdersTable todayOrders={todayOrders}/>}
+			{todayOrders.length > 0 && <TodayOrders orders={todayOrders} />}
 		</>
 	);
 }
