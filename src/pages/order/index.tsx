@@ -20,6 +20,7 @@ function Order(props: Props) {
 	return weekMenu.length > 0 ? (
 		<Row>
 			<Col>
+				<h1 className="page-heading">Заказ обеда на будущую неделю</h1>
 				<DaySwitcher
 					days={weekMenu.map((menu: DayMenu) => menu.day)}
 					activeDay={selectedDay}

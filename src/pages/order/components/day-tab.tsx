@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames";
 import { NavItem, NavLink } from "reactstrap";
 
-import { transformDayName } from "./transform-day-name";
+import { transformDayName } from "../../../utils/transform-day-name";
 import Day from "../../../entities/day";
 import "./day-tab.scss";
 

@@ -4,9 +4,7 @@ import { UserOrder } from "../../entities/types";
 import TodayUserOrder from "../../entities/today-user-order";
 
 export default class OrderService {
-	private api: string;
-
-	constructor(api: string) {
+	constructor(private readonly api: string) {
 		this.api = `${api}/order`;
 	}
 
@@ -20,7 +18,14 @@ export default class OrderService {
 	}
 
 	public orderLunch(userOrder: UserOrder) {
-		console.log(userOrder);
 		return axios.post(`${this.api}/order-lunch/`, userOrder);
+	}
+
+	public async getWeekOrders(userId: string | null): Promise<UserOrder[]> {
+		if (!userId) {
+			return []
+		}
+
+		return (await axios.get(`${this.api}/week-orders/${userId}`)).data;
 	}
 }

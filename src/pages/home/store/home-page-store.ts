@@ -4,9 +4,12 @@ import OrderService from "../../../services/order-service";
 import { RootStore } from "../../../store";
 import { UserOrder } from "../../../entities/types";
 import transformToUsersOrders from "../transformators/transform-to-users-orders";
+import PageStore from "../../../store/page-store";
 
-class HomePageStore {
-	constructor(private rootStore: RootStore, private orderService: OrderService) {
+class HomePageStore extends PageStore {
+	constructor(rootStore: RootStore, private orderService: OrderService) {
+		super(rootStore);
+
 		this.fetchAllData();
 	}
 
@@ -26,7 +29,7 @@ class HomePageStore {
 				this.sharedTodayOrders = transformToUsersOrders(sharedTodayOrdersData);
 			});
 		} catch (e) {
-			console.log(e.message);
+			console.error(e.message);
 		}
 	}
 

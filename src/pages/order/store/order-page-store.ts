@@ -1,13 +1,17 @@
 import { action, observable, runInAction } from "mobx";
+
 import RootStore from "../../../store/root-store";
 import MenuService from "../../../services/menu-service";
 import DayMenu from "../../../entities/day-menu";
 import OrderService from "../../../services/order-service";
 import { Order } from "../../../entities/types";
 import Day from "../../../entities/day";
+import PageStore from "../../../store/page-store";
 
-class OrderPageStore {
-	constructor(private rootStore: RootStore, private menuService: MenuService, private orderService: OrderService ) {
+class OrderPageStore extends PageStore {
+	constructor(rootStore: RootStore, private menuService: MenuService, private orderService: OrderService) {
+		super(rootStore);
+
 		this.fetchAllData();
 	}
 

@@ -7,6 +7,7 @@ import { UserOrder } from "../../../entities/types";
 import RootStore from "../../../store/root-store";
 import DishView from "./dish-view";
 import "./today-orders.scss";
+import SupplierBadge from "../../../components/supplier-badge/supplier-badge";
 
 interface Props {
 	rootStore?: RootStore;
@@ -18,7 +19,7 @@ const TodayOrders: FC<Props> = ({ orders, rootStore }) => {
 
 	return orders.length > 0 ? (
 		<section className="mt-4">
-			<div className="my-2">Перечень заказанных обедов на сегодня</div>
+			<h1 className="my-2 page-heading">Перечень всех заказанных обедов на сегодня</h1>
 			<Table className={cn("today-orders", { "today-orders--authorized": isAuthenticated })} responsive bordered size="sm">
 				<thead>
 					<tr>
@@ -46,7 +47,7 @@ const TodayOrders: FC<Props> = ({ orders, rootStore }) => {
 													order.dishes.map(dish => <DishView key={dish.id} dish={dish}/>)}
 											</div>
 											<div className="today-orders__supplier">
-												<div className="today-orders__supplier-box">{order.supplierName}</div>
+												<SupplierBadge supplierName={order.supplierName} />
 											</div>
 										</div>
 									)}
