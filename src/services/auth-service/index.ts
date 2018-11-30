@@ -19,8 +19,7 @@ interface UserDto {
 const LOCAL_STORAGE_KEY = "food-order-session";
 
 export default class AuthService {
-	constructor(private readonly domainEndpoint: string) {}
-
+	private readonly domainEndpoint: string = config.backendDomain;
 	private expiresAt: number = 0;
 
 	public get isAuthenticated() {
@@ -96,7 +95,7 @@ export default class AuthService {
 
 	//TODO:  KILLME !!!
 	public async getAllUsers() {
-		return (await axios(`${this.domainEndpoint}api/users/`)).data;
+		return (await axios(`${this.domainEndpoint}/api/users`)).data;
 	}
 
 	private getUserFromSession(sessionToken: string): User | null {
