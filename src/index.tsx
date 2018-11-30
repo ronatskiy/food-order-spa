@@ -14,9 +14,7 @@ import "./index.scss";
 
 configure({ enforceActions: "always" });
 
-// TODO: Add isAuthenticated verification from cookies
-const isAuthenticated = config.isAuthenticated;
-const services = createServices(`${config.backendDomain}api`, isAuthenticated);
+const services = createServices(`${config.backendDomain}api`);
 const stores = createStores(services);
 
 const rootElement = document.getElementById("root");

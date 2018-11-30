@@ -3,14 +3,16 @@ import { computed, observable } from "mobx";
 import AuthService from "../services/auth-service";
 import IdentityStore from "./identity-store";
 import OperationManager from "./opearation-manager";
+import CryptoService from "../services/crypto-service";
 
 interface Params {
 	authService: AuthService;
+	cryptoService: CryptoService;
 }
 
 export default class RootStore {
-	constructor({ authService }: Params ) {
-		this.identity = new IdentityStore(authService);
+	constructor({ authService, cryptoService }: Params ) {
+		this.identity = new IdentityStore(authService, cryptoService);
 		this.operationManager = new OperationManager();
 	}
 

@@ -12,3 +12,9 @@ export interface UserOrder {
 	day: Day;
 	order: Order;
 }
+
+export interface UserDto {
+	id: string;
+	name: string;
+	password: string;
+}

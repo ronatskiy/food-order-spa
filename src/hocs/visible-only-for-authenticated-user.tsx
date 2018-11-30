@@ -1,20 +1,18 @@
 import React from "react";
-import { Alert, Button } from "reactstrap";
+import { Alert } from "reactstrap";
 import { RootStore } from "../store";
 import { inject, observer } from "mobx-react";
+import { Link } from "react-router-dom";
 
-interface Props {
-	onLogin(): void;
-}
 
-const NotAuthenticatedAlert = ({ onLogin }: Props) => (
+const NotAuthenticatedAlert = () => (
 	<Alert className="my-3" color="danger">
 		<div>Эта страница доступна только авторизированным пользователям.</div>
 		<div>
 			Чтобы продолжить выполните{" "}
-			<Button onClick={onLogin} size="sm" color="primary">
+			<Link className="btn btn-primary btn-sm" to="/login">
 				Вход
-			</Button>
+			</Link>
 		</div>
 	</Alert>
 );
@@ -30,7 +28,7 @@ function visibleOnlyForAuthenticatedUser<T extends InjectedProps>(Control: React
 
 			return identity.isAuthenticated
 				? (<Control {...props} />)
-				: (<NotAuthenticatedAlert onLogin={() => identity.login()}/>);
+				: (<NotAuthenticatedAlert />);
 		}
 	))
 }

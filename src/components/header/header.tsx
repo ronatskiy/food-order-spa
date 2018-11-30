@@ -7,7 +7,6 @@ import {
 	Collapse,
 	Nav,
 	NavItem,
-	NavLink,
 	UncontrolledDropdown,
 	DropdownToggle,
 	DropdownMenu, DropdownItem
@@ -33,6 +32,10 @@ class Header extends React.Component<Props> {
 
 	toggle = action(() => {
 		this.isOpen = !this.isOpen;
+	});
+
+	handleLogout = action(() => {
+		this.props.rootStore!.identity.logout();
 	});
 
 	render() {
@@ -68,9 +71,9 @@ class Header extends React.Component<Props> {
 							<Nav navbar>
 								{!identity.isAuthenticated && (
 									<NavItem>
-										<NavLink onClick={() => identity.login()} href="#">
+										<Link className="nav-link" to="/login/">
 											Вход
-										</NavLink>
+										</Link>
 									</NavItem>
 								)}
 								{identity.isAuthenticated && (
@@ -83,7 +86,7 @@ class Header extends React.Component<Props> {
 												Профиль
 											</DropdownItem>
 											<DropdownItem divider />
-											<DropdownItem onClick={() => identity.logout()}>
+											<DropdownItem onClick={this.handleLogout}>
 												Выход
 											</DropdownItem>
 										</DropdownMenu>
