@@ -19,6 +19,8 @@ interface UserDto {
 const LOCAL_STORAGE_KEY = "food-order-session";
 
 export default class AuthService {
+	constructor(private readonly domainEndpoint: string) {}
+
 	private expiresAt: number = 0;
 
 	public get isAuthenticated() {
@@ -29,7 +31,7 @@ export default class AuthService {
 		password = this.encryptPassword(password);
 
 		try {
-			const { success, token }: AuthResponce = (await axios.post("/login", { name, password })).data;
+			const { success, token }: AuthResponce = (await axios.post(`${this.domainEndpoint}/login`, { name, password })).data;
 
 			if ( success ) {
 				let user: UserDto | null = null;
@@ -56,7 +58,7 @@ export default class AuthService {
 		password = this.encryptPassword(password);
 
 		try {
-			const { success, token }: AuthResponce = (await axios.post("/signin", { name, password })).data;
+			const { success, token }: AuthResponce = (await axios.post(`${this.domainEndpoint}/signin`, { name, password })).data;
 
 			if ( success ) {
 				let user: UserDto | null = null;
@@ -94,7 +96,7 @@ export default class AuthService {
 
 	//TODO:  KILLME !!!
 	public async getAllUsers() {
-		return (await axios(`${config.backendDomain}api/users/`)).data;
+		return (await axios(`${this.domainEndpoint}api/users/`)).data;
 	}
 
 	private getUserFromSession(sessionToken: string): User | null {
