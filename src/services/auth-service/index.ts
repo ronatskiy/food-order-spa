@@ -93,8 +93,8 @@ export default class AuthService {
 	}
 
 	//TODO:  KILLME !!!
-	public async users() {
-		return (await axios("/api/users")).data;
+	public async getAllUsers() {
+		return (await axios(`${config.backendDomain}api/users/`)).data;
 	}
 
 	private getUserFromSession(sessionToken: string): User | null {

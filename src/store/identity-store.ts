@@ -18,7 +18,7 @@ class IdentityStore {
 	@action
 	private async fetchAllUsers() {
 		try {
-			let users = await this.authService.users();
+			let users = await this.authService.getAllUsers();
 
 			runInAction(() => {
 				this.users = users;
