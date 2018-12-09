@@ -1,6 +1,5 @@
 import React from "react";
 
-import { RootStore } from "../store/root-context";
 import { inject, observer } from "mobx-react";
 
 function withAuth(Control) {
