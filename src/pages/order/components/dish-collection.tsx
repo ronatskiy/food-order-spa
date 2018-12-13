@@ -1,6 +1,6 @@
 import React from "react";
 
-import Dish from "../../../entities/dish";
+import Dish from "../../../domain/dish";
 import DishSelector from "./dish-selector/dish-selector";
 
 interface Props {

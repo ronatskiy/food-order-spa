@@ -1,7 +1,8 @@
 import { observable, action, computed, runInAction } from "mobx";
+
+import { UserDto } from "../domain/dto";
+import User from "../domain/user";
 import AuthService from "../services/auth-service";
-import User from "../entities/user";
-import { UserDto } from "../entities/types";
 import CryptoService from "../services/crypto-service";
 
 class IdentityStore {

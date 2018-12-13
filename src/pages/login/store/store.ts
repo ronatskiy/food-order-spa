@@ -4,7 +4,7 @@ import AppStore from "../../../store/app-store";
 import PageStore from "../../../store/page-store";
 import FormStoreBase from "./form-store-base";
 import { RegisterNewAccountFormSettings } from "../components/register-new-account-form";
-import { UserDto } from "../../../entities/types";
+import { UserDto } from "../../../domain/dto";
 
 interface Option {
 	label: string;

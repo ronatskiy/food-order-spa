@@ -1,7 +1,7 @@
 import { computed } from "mobx";
 
-import IdentityStore from "./identity-store";
 import OperationManager from "./opearation-manager";
+import IdentityStore from "./identity-store";
 import CalendarStore from "./calendar-store";
 import AppViewModel from "../models/app";
 

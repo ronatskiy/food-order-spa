@@ -4,8 +4,8 @@ import { Table, Alert, Badge, Collapse } from "reactstrap";
 import { ReactComponent as ChevronDown } from "../../../images/chevron-down.svg";
 import TakeFoodButton from "./take-food-button";
 import DishView from "./dish-view";
-import Dish from "../../../entities/dish";
-import { UserOrder } from "../../../entities/types";
+import Dish from "../../../domain/dish";
+import UserOrder from "../../../domain/user-order";
 
 interface Props {
 	sharedTodayOrders: UserOrder[];

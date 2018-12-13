@@ -1,7 +1,14 @@
 import DishCategory from "./dish-category";
+import Dish from "./dish";
+import { SupplierDto } from "./dto";
 
 class Supplier {
-	constructor({ supplierId, supplierName, availableMoneyToOrder, canMultiSelect = true, categories }) {
+	public id: string;
+	public name: string;
+	public availableMoneyToOrder: number;
+	public categories: DishCategory[];
+
+	constructor({ supplierId, supplierName, availableMoneyToOrder, canMultiSelect = true, categories }: SupplierDto) {
 		this.id = supplierId;
 		this.name = supplierName;
 		this.availableMoneyToOrder = availableMoneyToOrder;
@@ -9,7 +16,7 @@ class Supplier {
 	}
 
 	get allDishes() {
-		return this.categories.reduce((allDishes, category) => {
+		return this.categories.reduce((allDishes: Dish[], category) => {
 			return [...allDishes, ...category.dishes];
 		}, []);
 	}

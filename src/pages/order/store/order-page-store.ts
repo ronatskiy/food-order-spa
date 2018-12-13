@@ -2,9 +2,9 @@ import { action, computed, observable } from "mobx";
 
 import AppViewModel from "../../../models/app";
 import AppStore from "../../../store/app-store";
-import DayMenu from "../../../entities/day-menu";
-import { Order } from "../../../entities/types";
-import Day from "../../../entities/day";
+import DayMenu from "../../../domain/day-menu";
+import Order from "../../../domain/order";
+import Day from "../../../domain/day";
 import PageStore from "../../../store/page-store";
 
 class OrderPageStore extends PageStore {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-import Dish from "../../../../entities/dish";
+import Dish from "../../../../domain/dish";
 import DishSelector from "../dish-selector/dish-selector";
 import { ReactComponent as ShoppingCart } from "../../../../images/shopping-cart.svg";
 import "./shopping-basket.scss";

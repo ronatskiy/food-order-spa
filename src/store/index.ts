@@ -1,16 +1,18 @@
-import AppStore from "./app-store";
+import AppViewModel from "../models/app";
+
+import CryptoService from "../services/crypto-service";
 import MenuService from "../services/menu-service";
 import OrderService from "../services/order-service";
 import AuthService from "../services/auth-service";
+import CalendarService from "../services/calendar-service";
+
 import HomePageStore from "../pages/home/store/home-page-store";
 import OrderPageStore from "../pages/order/store/order-page-store";
 import WeekOrderPageStore from "../pages/week-order/store/week-order-page-store";
 import LoginPageStore from "../pages/login/store/store";
-import CryptoService from "../services/crypto-service";
-import CalendarService from "../services/calendar-service";
-import AppViewModel from "../models/app";
 import MyOrderStore from "./my-order-store";
 import IdentityStore from "./identity-store";
+import AppStore from "./app-store";
 
 interface Services {
 	menuService: MenuService;
@@ -35,4 +37,4 @@ function createStores({ menuService, orderService, authService, cryptoService, c
 	return { appStore, homePageStore, orderPageStore, weekOrderPageStore, loginPageStore, myOrderStore };
 }
 
-export { AppStore, createStores };
+export { createStores };

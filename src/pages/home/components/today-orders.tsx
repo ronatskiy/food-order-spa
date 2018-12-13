@@ -3,10 +3,10 @@ import { Table } from "reactstrap";
 import { inject, observer } from "mobx-react";
 import cn from "classnames";
 
-import { UserOrder } from "../../../entities/types";
+import UserOrder from "../../../domain/user-order";
 import DishView from "./dish-view";
-import "./today-orders.scss";
 import SupplierBadge from "../../../components/supplier-badge/supplier-badge";
+import "./today-orders.scss";
 
 interface Props {
 	currentUserId: string | null;

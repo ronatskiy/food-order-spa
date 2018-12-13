@@ -3,7 +3,7 @@ import cn from "classnames";
 import { NavItem, NavLink } from "reactstrap";
 
 import { translateDayName } from "../../../utils/translate-day-name";
-import Day from "../../../entities/day";
+import Day from "../../../domain/day";
 import "./day-tab.scss";
 
 interface Props {

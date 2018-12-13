@@ -2,8 +2,8 @@ import React from "react";
 import { Table } from "reactstrap";
 import { observer } from "mobx-react";
 
-import Day from "../../../entities/day";
-import { UserOrder } from "../../../entities/types";
+import Day from "../../../domain/day";
+import UserOrder from "../../../domain/user-order";
 import { translateDayName } from "../../../utils/translate-day-name";
 import SupplierBadge from "../../../components/supplier-badge/supplier-badge";
 import "./my-orders.scss";

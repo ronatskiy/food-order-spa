@@ -1,6 +1,6 @@
 import { action, computed, observable, runInAction } from "mobx";
 
-import Day from "../entities/day";
+import Day from "../domain/day";
 import CalendarService from "../services/calendar-service";
 import { getNextWeekWorkingDays } from "../utils/date-utils";
 

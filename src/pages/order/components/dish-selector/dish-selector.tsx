@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "classnames";
 
-import Dish from "../../../../entities/dish";
+import Dish from "../../../../domain/dish";
 import { ReactComponent as Add } from "../../../../images/add.svg";
 import { ReactComponent as Cancel } from "../../../../images/cancel.svg";
 import "./dish-selector.scss";

@@ -1,11 +1,6 @@
 import Supplier from "./supplier";
 import Day from "./day";
 
-export interface DayMenuDto {
- 	suppliers: [];
-	shortDate: string;
-}
-
 class DayMenu {
 	public weekDay: Day;
 	public suppliers: Supplier[];

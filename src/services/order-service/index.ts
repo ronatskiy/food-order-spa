@@ -1,7 +1,6 @@
 import axios from "axios";
 
-import { UserOrder } from "../../entities/types";
-import TodayUserOrder from "../../entities/today-user-order";
+import UserOrder from "../../domain/user-order";
 
 export default class OrderService {
 	constructor(private readonly api: string) {
@@ -12,9 +11,8 @@ export default class OrderService {
 		return (await axios.get(`${this.api}/today-orders/`)).data;
 	}
 
-	public async getSharedTodayOrders(): Promise<TodayUserOrder[]> {
-		const orders = (await axios.get(`${this.api}/shared-today-orders/`)).data;
-		return orders.map((uo: any) => new TodayUserOrder(uo.weekDay, uo.userName, uo.suppliers));
+	public async getSharedTodayOrders(): Promise<UserOrder[]> {
+		return (await axios.get(`${this.api}/shared-today-orders/`)).data;
 	}
 
 	public orderLunch(userOrder: UserOrder) {

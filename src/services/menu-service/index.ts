@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DayMenuDto } from "../../entities/day-menu";
+import { DayMenuDto } from "../../domain/dto";
 
 export default class MenuService {
 	private api: string;

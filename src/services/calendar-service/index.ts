@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import Day from "../../entities/day";
+import Day from "../../domain/day";
 
 class CalendarService {
 	constructor(private api: string) {

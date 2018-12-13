@@ -1,12 +1,12 @@
 import { observable, runInAction } from "mobx";
 
-import MenuService from "../services/menu-service";
-import DayMenu, { DayMenuDto } from "../entities/day-menu";
+import DayMenu from "../domain/day-menu";
+import UserOrder from "../domain/user-order";
+import { DayMenuDto } from "../domain/dto";
 import OrderService from "../services/order-service";
-import Day from "../entities/day";
+import Day from "../domain/day";
 import AppViewModel from "./app";
-import { UserOrder } from "../entities/types";
-import transformToUsersOrders from "../pages/home/transformators/transform-to-users-orders";
+import MenuService from "../services/menu-service";
 
 class OrderModel {
 	constructor(private menuService: MenuService, private orderService: OrderService, private appModel: AppViewModel) {}
@@ -57,7 +57,7 @@ class OrderModel {
 			let sharedTodayOrdersData = await this.orderService.getSharedTodayOrders();
 
 			runInAction(() => {
-				this.sharedTodayOrders = transformToUsersOrders(sharedTodayOrdersData);
+				this.sharedTodayOrders = sharedTodayOrdersData;
 			});
 		} catch (e) {
 			console.error(e.message);

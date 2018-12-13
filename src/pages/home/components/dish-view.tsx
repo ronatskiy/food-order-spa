@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Dish from "../../../entities/dish";
+import Dish from "../../../domain/dish";
 
 import "./dish-view.scss";
 

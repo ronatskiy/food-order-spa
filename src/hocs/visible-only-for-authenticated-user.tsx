@@ -1,9 +1,9 @@
 import React from "react";
 import { Alert } from "reactstrap";
-import { AppStore } from "../store";
 import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
 
+import AppStore from "../store/app-store";
 
 const NotAuthenticatedAlert = () => (
 	<Alert className="my-3" color="danger">

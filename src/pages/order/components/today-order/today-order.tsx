@@ -2,15 +2,15 @@ import React from "react";
 import { Col, Row, Alert } from "reactstrap";
 
 import ShoppingBasket from "../shopping-basket/shopping-basket";
-import DayMenu from "../../../../entities/day-menu";
+import DayMenu from "../../../../domain/day-menu";
 import Expander from "../../../../components/expander";
 import DishCollection from "../dish-collection";
 import "./today-order.scss";
-import Supplier from "../../../../entities/supplier";
-import Dish from "../../../../entities/dish";
-import DishCategory from "../../../../entities/dish-category";
-import { Order } from "../../../../entities/types";
-import Day from "../../../../entities/day";
+import Supplier from "../../../../domain/supplier";
+import Dish from "../../../../domain/dish";
+import DishCategory from "../../../../domain/dish-category";
+import Order from "../../../../domain/order";
+import Day from "../../../../domain/day";
 
 interface Props {
 	menu: DayMenu;

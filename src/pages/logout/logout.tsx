@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 
-import { AppStore } from "../../store";
+import AppStore from "../../store/app-store";
 
 interface Props {
 	appStore?: AppStore;

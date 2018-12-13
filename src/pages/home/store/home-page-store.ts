@@ -1,6 +1,6 @@
 import { computed } from "mobx";
 
-import { AppStore } from "../../../store";
+import AppStore from "../../../store/app-store";
 import PageStore from "../../../store/page-store";
 import AppViewModel from "../../../models/app";
 

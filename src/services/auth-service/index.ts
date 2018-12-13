@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwt from "jsonwebtoken";
 
-import User from "../../entities/user";
+import User from "../../domain/user";
 import { config } from "../../config";
 
 interface AuthResponce {

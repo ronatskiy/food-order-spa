@@ -6,7 +6,7 @@ import { Alert, Col, Row, TabContent, TabPane } from "reactstrap";
 import visibleOnlyForAuthenticatedUser from "../../hocs/visible-only-for-authenticated-user";
 import TodayOrder from "./components/today-order/today-order";
 import DaySwitcher from "./components/day-switcher";
-import DayMenu from "../../entities/day-menu";
+import DayMenu from "../../domain/day-menu";
 import OrderPageStore from "./store/order-page-store";
 import "./index.scss";
 

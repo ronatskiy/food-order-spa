@@ -2,7 +2,7 @@ import React from "react";
 import { Nav } from "reactstrap";
 
 import DayTab from "./day-tab";
-import Day from "../../../entities/day";
+import Day from "../../../domain/day";
 
 interface Props {
 	days: Day[];

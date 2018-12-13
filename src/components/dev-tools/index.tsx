@@ -1,7 +1,7 @@
 import React from "react";
 import { inject, observer } from "mobx-react";
-import { AppStore } from "../../store";
 
+import AppStore from "../../store/app-store";
 import "./index.scss";
 
 interface Props {

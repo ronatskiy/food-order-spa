@@ -11,14 +11,13 @@ import {
 	DropdownToggle,
 	DropdownMenu, DropdownItem
 } from "reactstrap";
-
-import User from "./user/user";
-import { AppStore } from "../../store";
-
-import "./header.scss";
 import { observer, inject } from "mobx-react";
 import { action, observable } from "mobx";
+
+import User from "./user/user";
+import AppStore from "../../store/app-store";
 import MyOrderStore from "../../store/my-order-store";
+import "./header.scss";
 
 interface Props {
 	appStore?: AppStore;
