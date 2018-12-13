@@ -1,39 +1,27 @@
-import { action, computed, observable, runInAction } from "mobx";
+import { action, computed } from "mobx";
 
 import PageStore from "../../../store/page-store";
-import OrderService from "../../../services/order-service";
-import { RootStore } from "../../../store";
-import { UserOrder } from "../../../entities/types";
-import Day from "../../../entities/day";
-
-const WEEK_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+import { AppStore } from "../../../store";
+import AppViewModel from "../../../models/app";
 
 export default class WeekOrderPageStore extends PageStore {
-	constructor(rootStore: RootStore, private orderService: OrderService) {
-		super(rootStore);
+	constructor(appStore: AppStore, private appModel: AppViewModel) {
+		super(appStore);
 	}
 
-	@observable
-	public orders: UserOrder[] = [];
+	@computed
+	public get orders() {
+		return this.appModel.orders.myOrders;
+	}
 
 	@computed
-	public get days() {
-		const days = this.orders.map(userOrder => userOrder.day);
-
-		return WEEK_DAYS.reduce((acc: Day[], shortName: string) => {
-			const day = days.find(d => d.shortName === shortName);
-
-			return [...acc, day || new Day(shortName)];
-		}, [])
+	public get nextWeekWorkingDays() {
+		return this.appModel.calendar.nextWeekWorkingDays;
 	}
 
 	@action
 	public async fetchOrders() {
-		const userId = this.rootStore.identity.isAuthenticated ?  this.rootStore.identity.currentUser!.id : null;
-		const orders = await this.rootStore.operationManager.runWithProgress(() => this.orderService.getWeekOrders(userId));
-
-		runInAction(() => {
-			this.orders = orders;
-		})
+		const userId = this.appStore.identity.isAuthenticated ? this.appStore.identity.currentUser!.id : null;
+		this.appStore.operationManager.runWithProgress(() => this.appModel.orders.fetchMyOrders(userId));
 	}
 }

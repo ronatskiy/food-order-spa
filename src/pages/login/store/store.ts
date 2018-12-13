@@ -1,6 +1,6 @@
 import { action, computed, observable } from "mobx";
 
-import RootStore from "../../../store/root-store";
+import AppStore from "../../../store/app-store";
 import PageStore from "../../../store/page-store";
 import FormStoreBase from "./form-store-base";
 import { RegisterNewAccountFormSettings } from "../components/register-new-account-form";
@@ -12,7 +12,7 @@ interface Option {
 }
 
 export class LoginFormStore {
-	constructor(private readonly users: UserDto[], private readonly rootStore: RootStore) {}
+	constructor(private readonly users: UserDto[], private readonly appStore: AppStore) {}
 
 	@observable
 	selectedUserId: string | null = null;
@@ -46,8 +46,8 @@ export class LoginFormStore {
 	onSubmit = async () => {
 		if (this.selectedUser) {
 			const { name, password } = this.selectedUser;
-			await this.rootStore.operationManager.runWithProgress(() => {
-				return this.rootStore.identity.login(name, password)
+			await this.appStore.operationManager.runWithProgress(() => {
+				return this.appStore.identity.login(name, password)
 			})
 		}
 	};
@@ -56,14 +56,14 @@ export class LoginFormStore {
 class LoginPageStore extends PageStore {
 	@observable
 	public signInForm: FormStoreBase;
-	constructor(rootStore: RootStore) {
-		super(rootStore);
+	constructor(appStore: AppStore) {
+		super(appStore);
 
 		this.signInForm = new FormStoreBase(RegisterNewAccountFormSettings, async (form: any) => {
 			const { name, password } = form.values();
 
-			await this.rootStore.operationManager.runWithProgress(() => {
-				return rootStore.identity.signIn(name, password);
+			await this.appStore.operationManager.runWithProgress(() => {
+				return appStore.identity.signIn(name, password);
 			});
 
 			form.clear();
@@ -73,7 +73,7 @@ class LoginPageStore extends PageStore {
 
 	@computed
 	get isAuthenticated() {
-		return this.rootStore.identity.isAuthenticated;
+		return this.appStore.identity.isAuthenticated;
 	};
 
 	@observable
@@ -86,10 +86,10 @@ class LoginPageStore extends PageStore {
 
 	@computed
 	public get loginForm() {
-		const { users } = this.rootStore.identity;
+		const { users } = this.appStore.identity;
 
 		if(users.length > 0) {
-			return new LoginFormStore(users, this.rootStore);
+			return new LoginFormStore(users, this.appStore);
 		}
 
 		return null;

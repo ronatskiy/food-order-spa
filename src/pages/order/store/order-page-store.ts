@@ -1,69 +1,60 @@
-import { action, observable, runInAction } from "mobx";
+import { action, computed, observable } from "mobx";
 
-import RootStore from "../../../store/root-store";
-import MenuService from "../../../services/menu-service";
+import AppViewModel from "../../../models/app";
+import AppStore from "../../../store/app-store";
 import DayMenu from "../../../entities/day-menu";
-import OrderService from "../../../services/order-service";
 import { Order } from "../../../entities/types";
 import Day from "../../../entities/day";
 import PageStore from "../../../store/page-store";
 
 class OrderPageStore extends PageStore {
-	constructor(rootStore: RootStore, private menuService: MenuService, private orderService: OrderService) {
-		super(rootStore);
-
-		this.fetchAllData();
+	constructor(appStore: AppStore, private appModel: AppViewModel) {
+		super(appStore);
 	}
 
+	@computed
+	public get nextWeekMenu(): DayMenu[] {
+		return this.appModel.orders.nextWeekMenu;
+	};
+
 	@observable
-	public weekMenu: DayMenu[] = [];
-	@observable
-	public selectedDay: string = "";
+	public selectedDay: Day | null = null;
 
 	@action.bound
-	public switchDay = (dayName: string) => {
-		if (this.selectedDay !== dayName) {
-
-			this.selectedDay = dayName;
+	public switchDay = (day: Day) => {
+		if (this.selectedDay !== day) {
+			this.selectedDay = day;
 		}
 	};
 
+	@computed
+	get activeDay() {
+		let weekDay = null;
+		if (this.appModel.orders.nextWeekMenu.length > 0) {
+			[{ weekDay }] = this.appModel.orders.nextWeekMenu;
+		}
+
+		return this.selectedDay || weekDay
+	}
+
 	public orderLunch = async (day: Day, order: Order) => {
-		if(!this.rootStore.identity.isAuthenticated) {
+		if(!this.appStore.identity.isAuthenticated) {
 			throw new Error("User must be authenticated to perform this operation");
 		}
 
 		try {
-			const user = this.rootStore.identity.currentUser!;
-			const makeOrder = () => this.orderService.orderLunch({
+			const user = this.appStore.identity.currentUser!;
+			const makeOrder = () => this.appModel.orders.orderLunch( {
 				day,
 				user,
 				order,
 			});
 
-			await this.rootStore.operationManager.runWithProgress(makeOrder);
-			return;
+			await this.appStore.operationManager.runWithProgress(makeOrder);
 		} catch (e) {
 			console.error(e.message);
 		}
 	};
-
-
-	private async fetchAllData() {
-		try {
-			const weekMenu: DayMenu[] = await this.menuService.getWeekMenu();
-			const [dayMenu] = weekMenu;
-
-			runInAction(() => {
-				this.weekMenu = weekMenu;
-			});
-
-			// TODO: Use day instead of shortName
-			this.switchDay(dayMenu.day.shortName);
-		} catch (e) {
-			console.log(e.message);
-		}
-	}
 }
 
 export default OrderPageStore;

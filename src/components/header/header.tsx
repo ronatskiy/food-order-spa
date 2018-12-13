@@ -13,18 +13,23 @@ import {
 } from "reactstrap";
 
 import User from "./user/user";
-import { RootStore } from "../../store";
+import { AppStore } from "../../store";
 
 import "./header.scss";
 import { observer, inject } from "mobx-react";
 import { action, observable } from "mobx";
+import MyOrderStore from "../../store/my-order-store";
 
 interface Props {
-	rootStore?: RootStore;
+	appStore?: AppStore;
+	myOrderStore?: MyOrderStore;
 	className: string;
 }
 
-@inject("rootStore")
+@inject(({ appStore, myOrderStore }) => ({
+	appStore: appStore as AppStore,
+	myOrderStore: myOrderStore as MyOrderStore,
+}))
 @observer
 class Header extends React.Component<Props> {
 	@observable
@@ -35,12 +40,13 @@ class Header extends React.Component<Props> {
 	});
 
 	handleLogout = action(() => {
-		this.props.rootStore!.identity.logout();
+		this.props.appStore!.identity.logout();
 	});
 
 	render() {
 		const { className } = this.props;
-		const { identity } = this.props.rootStore!;
+		const { identity } = this.props.appStore!;
+		const { canOrder } = this.props.myOrderStore!;
 
 		return (
 			<header className={`header ${className}`}>
@@ -52,11 +58,13 @@ class Header extends React.Component<Props> {
 						<NavbarToggler onClick={this.toggle} />
 						<Collapse isOpen={this.isOpen} navbar>
 							<Nav className="ml-auto mr-auto" navbar>
-								<NavItem>
-									<Link className="nav-link" to="/order/">
-										Заказать обед
-									</Link>
-								</NavItem>
+								{canOrder &&
+									<NavItem>
+										<Link className="nav-link" to="/order/">
+											Заказать обед
+										</Link>
+									</NavItem>
+								}
 								<NavItem>
 									<Link className="nav-link" to="/week-order/">
 										Заказ на неделю

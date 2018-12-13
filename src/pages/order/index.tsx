@@ -15,20 +15,20 @@ interface Props {
 }
 
 function Order(props: Props) {
-	const { selectedDay, weekMenu, switchDay, orderLunch } = props.orderPageStore!;
+	const { activeDay, nextWeekMenu, switchDay, orderLunch } = props.orderPageStore!;
 
-	return weekMenu.length > 0 ? (
+	return nextWeekMenu.length > 0 ? (
 		<Row>
 			<Col>
 				<h1 className="page-heading">Заказ обеда на будущую неделю</h1>
 				<DaySwitcher
-					days={weekMenu.map((menu: DayMenu) => menu.day)}
-					activeDay={selectedDay}
+					days={nextWeekMenu.map((menu: DayMenu) => menu.weekDay)}
+					activeDay={activeDay}
 					onSwitch={switchDay}
 				/>
-				<TabContent activeTab={selectedDay}>
-					{weekMenu.map((dayMenu: DayMenu) => {
-						const { shortName, isHoliday } = dayMenu.day;
+				<TabContent activeTab={activeDay!.shortName}>
+					{nextWeekMenu.map((dayMenu: DayMenu) => {
+						const { shortName, isHoliday } = dayMenu.weekDay;
 
 						return (
 							<TabPane className="py-2" key={shortName} tabId={shortName}>

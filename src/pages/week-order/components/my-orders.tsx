@@ -1,9 +1,10 @@
 import React from "react";
 import { Table } from "reactstrap";
+import { observer } from "mobx-react";
 
 import Day from "../../../entities/day";
 import { UserOrder } from "../../../entities/types";
-import { transformDayName } from "../../../utils/transform-day-name";
+import { translateDayName } from "../../../utils/translate-day-name";
 import SupplierBadge from "../../../components/supplier-badge/supplier-badge";
 import "./my-orders.scss";
 
@@ -13,23 +14,25 @@ interface Props {
 }
 
 const MyOrders: React.FC<Props> = ({ orders, days }) => {
+	const hasOrders = orders.length > 0;
+
 	return (
 		<Table className="my-orders" responsive bordered size="sm">
 			<thead>
 				<tr>
 					{days.map(({ shortName }) => (
-						<th key={shortName}>{transformDayName(shortName)}</th>
+						<th key={shortName}>{translateDayName(shortName)}</th>
 					))}
 				</tr>
 			</thead>
-			<tbody>
-				{orders.length > 0 && (
+			{hasOrders && (
+				<tbody>
 					<tr>
-						{days.map(({ shortName }) => {
-							const userOrder = orders.find(o => o.day.shortName === shortName);
+						{days.map(({ shortDate }) => {
+							const userOrder = orders.find(o => o.day.shortDate === shortDate);
 
 							return (
-								<td key={shortName}>
+								<td key={shortDate}>
 									{userOrder && (
 										<div>
 											<SupplierBadge supplierName={userOrder.order.supplierName} />
@@ -46,10 +49,10 @@ const MyOrders: React.FC<Props> = ({ orders, days }) => {
 							);
 						})}
 					</tr>
-				)}
-			</tbody>
+				</tbody>
+			)}
 		</Table>
 	);
 };
 
-export default MyOrders;
+export default observer(MyOrders);

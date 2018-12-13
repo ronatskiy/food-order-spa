@@ -3,21 +3,21 @@ import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 
-import { RootStore } from "../store";
+import { AppStore } from "../../store";
 
 interface Props {
-	rootStore?: RootStore;
+	appStore?: AppStore;
 }
 
-@inject("rootStore")
+@inject("appStore")
 @observer
 class LogoutPage extends React.Component<Props> {
 	componentDidMount() {
-		this.props.rootStore!.identity.logout();
+		this.props.appStore!.identity.logout();
 	}
 
 	render() {
-		const { isAuthenticated } = this.props.rootStore!.identity;
+		const { isAuthenticated } = this.props.appStore!.identity;
 
 		return (
 			<Row tag="section" className="mt-4">

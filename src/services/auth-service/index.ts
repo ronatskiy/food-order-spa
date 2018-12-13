@@ -95,7 +95,7 @@ export default class AuthService {
 
 	//TODO:  KILLME !!!
 	public async getAllUsers() {
-		return (await axios(`${this.domainEndpoint}/api/users`)).data;
+		return (await axios(`${this.domainEndpoint}api/users`)).data;
 	}
 
 	private getUserFromSession(sessionToken: string): User | null {

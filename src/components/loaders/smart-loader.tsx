@@ -2,16 +2,16 @@ import React from "react";
 import { inject, observer } from "mobx-react";
 
 import Loader from "./ellipsis-loader";
-import RootStore from "../../store/root-store";
+import AppStore from "../../store/app-store";
 
 interface Props {
-	rootStore?: RootStore;
+	appStore?: AppStore;
 }
 
-function SmartLoader({ rootStore }: Props) {
-	const { hasPendingTasks } = rootStore!.operationManager;
+function SmartLoader({ appStore }: Props) {
+	const { hasPendingTasks } = appStore!.operationManager;
 
 	return hasPendingTasks ? <Loader /> : null;
 }
 
-export default inject("rootStore")(observer(SmartLoader));
+export default inject("appStore")(observer(SmartLoader));

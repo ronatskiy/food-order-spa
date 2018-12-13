@@ -37,7 +37,7 @@ export default class TodayOrder extends React.Component<Props, State> {
 	private handleOrder = async () => {
 		const { onOrderLunch, menu } = this.props;
 
-		await onOrderLunch(menu.day ,{
+		await onOrderLunch(menu.weekDay, {
 			supplierName: this.getSelectedSupplier()!.name,
 			dishes: this.state.selectedDishes,
 		} as Order);

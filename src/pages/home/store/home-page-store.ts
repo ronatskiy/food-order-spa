@@ -1,45 +1,23 @@
-import { observable, runInAction, action } from "mobx";
+import { computed } from "mobx";
 
-import OrderService from "../../../services/order-service";
-import { RootStore } from "../../../store";
-import { UserOrder } from "../../../entities/types";
-import transformToUsersOrders from "../transformators/transform-to-users-orders";
+import { AppStore } from "../../../store";
 import PageStore from "../../../store/page-store";
+import AppViewModel from "../../../models/app";
 
 class HomePageStore extends PageStore {
-	constructor(rootStore: RootStore, private orderService: OrderService) {
-		super(rootStore);
-
-		this.fetchAllData();
+	constructor(appStore: AppStore, private appModel: AppViewModel) {
+		super(appStore);
 	}
 
-	@observable
-	public todayOrders: UserOrder[] = [];
-	@observable
-	public sharedTodayOrders: UserOrder[] = [];
+	@computed
+	public get todayOrders() {
+		return this.appModel.orders.todayOrders;
+	};
 
-	@action.bound
-	private async fetchAllData() {
-		try {
-			let todayOrders = await this.fetchTodayOrders();
-			let sharedTodayOrdersData = await this.fetchSharedTodayOrders();
-
-			runInAction(() => {
-				this.todayOrders = todayOrders;
-				this.sharedTodayOrders = transformToUsersOrders(sharedTodayOrdersData);
-			});
-		} catch (e) {
-			console.error(e.message);
-		}
-	}
-
-	private fetchTodayOrders() {
-		return this.rootStore.operationManager.runWithProgress(() => this.orderService.getTodayOrders())
-	}
-
-	private fetchSharedTodayOrders() {
-		return this.rootStore.operationManager.runWithProgress(() => this.orderService.getSharedTodayOrders())
-	}
+	@computed
+	public get sharedTodayOrders() {
+		return this.appModel.orders.sharedTodayOrders;
+	};
 }
 
 export default HomePageStore;

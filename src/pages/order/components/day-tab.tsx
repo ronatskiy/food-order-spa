@@ -2,14 +2,14 @@ import React from "react";
 import cn from "classnames";
 import { NavItem, NavLink } from "reactstrap";
 
-import { transformDayName } from "../../../utils/transform-day-name";
+import { translateDayName } from "../../../utils/translate-day-name";
 import Day from "../../../entities/day";
 import "./day-tab.scss";
 
 interface Props {
 	day: Day;
 	isActive: boolean;
-	onClick(shortName: string): void;
+	onClick(day: Day): void;
 }
 
 class DayTab extends React.Component<Props> {
@@ -18,7 +18,7 @@ class DayTab extends React.Component<Props> {
 			return;
 		}
 
-		this.props.onClick(this.props.day.shortName);
+		this.props.onClick(this.props.day);
 	};
 
 	public render() {
@@ -32,7 +32,7 @@ class DayTab extends React.Component<Props> {
 			<NavItem className={classNames}>
 				<NavLink onClick={this.handleClick}>
 					<div className={cn("day-tab__day-name", { "day-tab__day-name--holiday": isHoliday })}>
-						{transformDayName(shortName)}
+						{translateDayName(shortName)}
 					</div>
 				</NavLink>
 			</NavItem>

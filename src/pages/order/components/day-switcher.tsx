@@ -6,20 +6,16 @@ import Day from "../../../entities/day";
 
 interface Props {
 	days: Day[];
-	activeDay: string;
-	onSwitch(dayName: string): void;
+	activeDay: Day | null;
+	onSwitch(day: Day): void;
 }
 
-function DaySwitcher(props: Props) {
-	const { days, activeDay, onSwitch } = props;
-
+function DaySwitcher({ days, activeDay, onSwitch }: Props) {
 	return (
 		<Nav className="my-4" tabs>
-			{days.map(day => {
-				const { shortName } = day;
-
-				return <DayTab key={shortName} day={day} isActive={shortName === activeDay} onClick={onSwitch} />;
-			})}
+			{days.map(day => (
+				<DayTab key={day.shortName} day={day} isActive={day === activeDay} onClick={onSwitch} />
+			))}
 		</Nav>
 	);
 }

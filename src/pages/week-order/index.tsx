@@ -17,12 +17,12 @@ class MyWeekOrder extends Component<Props> {
 	}
 
 	render() {
-		const { orders, days } = this.props.weekOrderPageStore!;
+		const { orders, nextWeekWorkingDays } = this.props.weekOrderPageStore!;
 
 		return (
 			<section>
 				<h1 className="page-heading">Мой заказ на неделю</h1>
-				<MyOrders orders={orders} days={days} />
+				<MyOrders orders={orders} days={nextWeekWorkingDays} />
 			</section>
 		);
 	}

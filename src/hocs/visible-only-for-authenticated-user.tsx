@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert } from "reactstrap";
-import { RootStore } from "../store";
+import { AppStore } from "../store";
 import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
 
@@ -18,13 +18,13 @@ const NotAuthenticatedAlert = () => (
 );
 
 interface InjectedProps {
-	rootStore?: RootStore;
+	appStore?: AppStore;
 }
 
 function visibleOnlyForAuthenticatedUser<T extends InjectedProps>(Control: React.ComponentType<T>) {
-	return inject("rootStore")(observer(
+	return inject("appStore")(observer(
 		function (props: T) {
-			const { identity } = props.rootStore!;
+			const { identity } = props.appStore!;
 
 			return identity.isAuthenticated
 				? (<Control {...props} />)

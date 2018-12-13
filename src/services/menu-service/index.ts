@@ -1,5 +1,5 @@
 import axios from "axios";
-import DayMenu from "../../entities/day-menu";
+import { DayMenuDto } from "../../entities/day-menu";
 
 export default class MenuService {
 	private api: string;
@@ -8,9 +8,7 @@ export default class MenuService {
 		this.api = `${api}/menu/week-menu/`;
 	}
 
-	public async getWeekMenu() {
-		const menu = (await axios.get(this.api)).data;
-
-		return menu.map((wd: any) => new DayMenu(wd));
+	public async getWeekMenu(): Promise<DayMenuDto[]> {
+		return (await axios.get(this.api)).data;
 	}
 }

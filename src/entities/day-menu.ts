@@ -1,27 +1,18 @@
 import Supplier from "./supplier";
 import Day from "./day";
 
-interface DayMenuRawData {
- 	suppliers:[];
-	weekDay: any;
-	weekDayDate: string;
-	isHoliday: boolean;
-	orderedDishes: [];
+export interface DayMenuDto {
+ 	suppliers: [];
+	shortDate: string;
 }
 
 class DayMenu {
-	public day: Day;
+	public weekDay: Day;
 	public suppliers: Supplier[];
-	public orderedDishes: [];
 
-	constructor({ suppliers, weekDay, weekDayDate = "", isHoliday = false, orderedDishes = [] }: DayMenuRawData) {
-		this.day = new Day(
-			weekDay,
-			weekDayDate,
-			isHoliday,
-		);
+	constructor(day: Day, suppliers: []) {
+		this.weekDay = day;
 		this.suppliers = suppliers.map(supplier => new Supplier(supplier));
-		this.orderedDishes = orderedDishes;
 	}
 }
 

@@ -1,4 +1,4 @@
-import RootStore from "./root-store";
+import AppStore from "./app-store";
 import MenuService from "../services/menu-service";
 import OrderService from "../services/order-service";
 import AuthService from "../services/auth-service";
@@ -7,22 +7,32 @@ import OrderPageStore from "../pages/order/store/order-page-store";
 import WeekOrderPageStore from "../pages/week-order/store/week-order-page-store";
 import LoginPageStore from "../pages/login/store/store";
 import CryptoService from "../services/crypto-service";
+import CalendarService from "../services/calendar-service";
+import AppViewModel from "../models/app";
+import MyOrderStore from "./my-order-store";
+import IdentityStore from "./identity-store";
 
 interface Services {
 	menuService: MenuService;
 	orderService: OrderService;
 	authService: AuthService;
 	cryptoService: CryptoService;
+	calendarService: CalendarService;
 }
 
-function createStores({ menuService, orderService, authService, cryptoService }: Services) {
-	const rootStore = new RootStore({ authService, cryptoService });
-	const homePageStore = new HomePageStore(rootStore, orderService);
-	const orderPageStore = new OrderPageStore(rootStore, menuService, orderService);
-	const weekOrderPageStore = new WeekOrderPageStore(rootStore, orderService);
-	const loginPageStore = new LoginPageStore(rootStore);
+function createStores({ menuService, orderService, authService, cryptoService, calendarService }: Services) {
+	const appModel = new AppViewModel({ calendarService, menuService, orderService });
+	const myOrderStore = new MyOrderStore(appModel);
+	const identityStore = new IdentityStore(authService, cryptoService);
 
-	return { rootStore, homePageStore, orderPageStore, weekOrderPageStore, loginPageStore };
+	const appStore = new AppStore({ appModel, identityStore });
+
+	const homePageStore = new HomePageStore(appStore, appModel);
+	const orderPageStore = new OrderPageStore(appStore, appModel);
+	const weekOrderPageStore = new WeekOrderPageStore(appStore, appModel);
+	const loginPageStore = new LoginPageStore(appStore);
+
+	return { appStore, homePageStore, orderPageStore, weekOrderPageStore, loginPageStore, myOrderStore };
 }
 
-export { RootStore, createStores };
+export { AppStore, createStores };

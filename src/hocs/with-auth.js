@@ -3,11 +3,11 @@ import React from "react";
 import { inject, observer } from "mobx-react";
 
 function withAuth(Control) {
-	return inject("rootStore")(
+	return inject("appStore")(
 		observer(
 			class extends React.Component {
 				handleClick = () => {
-					if (!this.props.rootStore.identity.isAuthenticated) {
+					if (!this.props.appStore.identity.isAuthenticated) {
 						alert("Переходим на страницу аутентификации");
 						return;
 					}

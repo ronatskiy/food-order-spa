@@ -11,18 +11,21 @@ interface Props {
 }
 
 function Home({ homePageStore }: Props) {
-	const { sharedTodayOrders, todayOrders } = homePageStore!;
+	const { sharedTodayOrders, todayOrders, appStore } = homePageStore!;
+	const hasSharedTodayOrders = sharedTodayOrders.length > 0;
+	const hasTodayOrders = todayOrders.length > 0;
+	const currentUserId = appStore.identity.currentUser ? appStore.identity.currentUser.id : null;
 
 	return (
 		<>
-			{sharedTodayOrders.length > 0 && (
+			{hasSharedTodayOrders && (
 				<Row className="mt-3">
 					<Col>
 						<SharedFoodAlert sharedTodayOrders={sharedTodayOrders}/>
 					</Col>
 				</Row>
 			)}
-			{todayOrders.length > 0 && <TodayOrders orders={todayOrders} />}
+			{hasTodayOrders && <TodayOrders orders={todayOrders} currentUserId={currentUserId} />}
 		</>
 	);
 }

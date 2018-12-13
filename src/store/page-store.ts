@@ -1,5 +1,5 @@
-import RootStore from "./root-store";
+import AppStore from "./app-store";
 
 export default class PageStore {
-	constructor(protected rootStore: RootStore) {}
+	constructor(public appStore: AppStore) {}
 }
