@@ -14,7 +14,7 @@ function DaySwitcher({ days, activeDay, onSwitch }: Props) {
 	return (
 		<Nav className="my-4" tabs>
 			{days.map(day => (
-				<DayTab key={day.shortName} day={day} isActive={day === activeDay} onClick={onSwitch} />
+				<DayTab key={day.shortDate} day={day} isActive={day === activeDay} onClick={onSwitch} />
 			))}
 		</Nav>
 	);

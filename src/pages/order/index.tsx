@@ -9,13 +9,14 @@ import DaySwitcher from "./components/day-switcher";
 import DayMenu from "../../domain/day-menu";
 import OrderPageStore from "./store/order-page-store";
 import "./index.scss";
+import { Link } from "react-router-dom";
 
 interface Props {
 	orderPageStore?: OrderPageStore;
 }
 
 function Order(props: Props) {
-	const { activeDay, nextWeekMenu, switchDay, orderLunch } = props.orderPageStore!;
+	const { activeDay, nextWeekMenu, switchDay, orderLunch, myOrders } = props.orderPageStore!;
 
 	return nextWeekMenu.length > 0 ? (
 		<Row>
@@ -28,11 +29,15 @@ function Order(props: Props) {
 				/>
 				<TabContent activeTab={activeDay!.shortName}>
 					{nextWeekMenu.map((dayMenu: DayMenu) => {
-						const { shortName, isHoliday } = dayMenu.weekDay;
+						const { shortName, isHoliday, shortDate } = dayMenu.weekDay;
+						const isOrdered = myOrders.some(userOrder => userOrder.day.shortDate === shortDate)
 
 						return (
-							<TabPane className="py-2" key={shortName} tabId={shortName}>
-								{!isHoliday && dayMenu && <TodayOrder menu={dayMenu} onOrderLunch={orderLunch}/>}
+							<TabPane className="py-2" key={shortDate} tabId={shortName}>
+								{!isHoliday && (!isOrdered
+									? <TodayOrder menu={dayMenu} onOrderLunch={orderLunch}/>
+									: <Alert color="info">Вы уже заказали обед на этот день <Link to="/week-order/">подробнее...</Link></Alert>
+								)}
 								{isHoliday && <Alert color="info">Заказ обедов на выходной день не доступен</Alert>}
 							</TabPane>
 						);

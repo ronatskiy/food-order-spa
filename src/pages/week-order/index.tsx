@@ -21,7 +21,7 @@ class MyWeekOrder extends Component<Props> {
 
 		return (
 			<section>
-				<h1 className="page-heading">Мой заказ на неделю</h1>
+				<h1 className="page-heading">Мой заказ на следующую неделю</h1>
 				<MyOrders orders={orders} days={nextWeekWorkingDays} />
 			</section>
 		);

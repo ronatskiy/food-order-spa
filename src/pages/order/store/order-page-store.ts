@@ -17,6 +17,11 @@ class OrderPageStore extends PageStore {
 		return this.appModel.orders.nextWeekMenu;
 	};
 
+	@computed
+	public get myOrders() {
+		return this.appModel.orders.myOrders;
+	}
+
 	@observable
 	public selectedDay: Day | null = null;
 

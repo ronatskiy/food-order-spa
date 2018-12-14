@@ -24,11 +24,11 @@ interface Services {
 
 function createStores({ menuService, orderService, authService, cryptoService, calendarService }: Services) {
 	const appModel = new AppViewModel({ calendarService, menuService, orderService });
-	const myOrderStore = new MyOrderStore(appModel);
 	const identityStore = new IdentityStore(authService, cryptoService);
 
 	const appStore = new AppStore({ appModel, identityStore });
 
+	const myOrderStore = new MyOrderStore(appModel, appStore);
 	const homePageStore = new HomePageStore(appStore, appModel);
 	const orderPageStore = new OrderPageStore(appStore, appModel);
 	const weekOrderPageStore = new WeekOrderPageStore(appStore, appModel);
